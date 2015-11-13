@@ -9,12 +9,19 @@
 /* Begin PBXBuildFile section */
 		FAD737411BD3956C00BC4D56 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FAD737401BD3956C00BC4D56 /* main.m */; };
 		FAD737441BD3956C00BC4D56 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FAD737431BD3956C00BC4D56 /* AppDelegate.m */; };
-		FAD737471BD3956C00BC4D56 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FAD737461BD3956C00BC4D56 /* ViewController.m */; };
 		FAD7374A1BD3956C00BC4D56 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FAD737481BD3956C00BC4D56 /* Main.storyboard */; };
 		FAD7374C1BD3956C00BC4D56 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FAD7374B1BD3956C00BC4D56 /* Assets.xcassets */; };
 		FAD7374F1BD3956C00BC4D56 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FAD7374D1BD3956C00BC4D56 /* LaunchScreen.storyboard */; };
 		FAD7375A1BD3956C00BC4D56 /* _048Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = FAD737591BD3956C00BC4D56 /* _048Tests.m */; };
 		FAD737651BD3956C00BC4D56 /* _048UITests.m in Sources */ = {isa = PBXBuildFile; fileRef = FAD737641BD3956C00BC4D56 /* _048UITests.m */; };
+		FAD737771BD39F8800BC4D56 /* PositionStruct.m in Sources */ = {isa = PBXBuildFile; fileRef = FAD737761BD39F8800BC4D56 /* PositionStruct.m */; settings = {ASSET_TAGS = (); }; };
+		FAD7377C1BD39FA000BC4D56 /* Grid.m in Sources */ = {isa = PBXBuildFile; fileRef = FAD737791BD39FA000BC4D56 /* Grid.m */; settings = {ASSET_TAGS = (); }; };
+		FAD7377D1BD39FA000BC4D56 /* GridOfObjects.m in Sources */ = {isa = PBXBuildFile; fileRef = FAD7377B1BD39FA000BC4D56 /* GridOfObjects.m */; settings = {ASSET_TAGS = (); }; };
+		FAD737821BD39FAE00BC4D56 /* GridVC.m in Sources */ = {isa = PBXBuildFile; fileRef = FAD7377F1BD39FAE00BC4D56 /* GridVC.m */; settings = {ASSET_TAGS = (); }; };
+		FAD737831BD39FAE00BC4D56 /* NoScrollGridVC.m in Sources */ = {isa = PBXBuildFile; fileRef = FAD737811BD39FAE00BC4D56 /* NoScrollGridVC.m */; settings = {ASSET_TAGS = (); }; };
+		FAD737861BD39FBA00BC4D56 /* CodableObject.m in Sources */ = {isa = PBXBuildFile; fileRef = FAD737851BD39FBA00BC4D56 /* CodableObject.m */; settings = {ASSET_TAGS = (); }; };
+		FAD737891BD3A7DF00BC4D56 /* TwentyFourtyEightVC.m in Sources */ = {isa = PBXBuildFile; fileRef = FAD737881BD3A7DF00BC4D56 /* TwentyFourtyEightVC.m */; settings = {ASSET_TAGS = (); }; };
+		FAD7378F1BD3AA8500BC4D56 /* TwentyFourtyEight.m in Sources */ = {isa = PBXBuildFile; fileRef = FAD7378E1BD3AA8500BC4D56 /* TwentyFourtyEight.m */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,8 +46,6 @@
 		FAD737401BD3956C00BC4D56 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		FAD737421BD3956C00BC4D56 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		FAD737431BD3956C00BC4D56 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		FAD737451BD3956C00BC4D56 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		FAD737461BD3956C00BC4D56 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		FAD737491BD3956C00BC4D56 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		FAD7374B1BD3956C00BC4D56 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FAD7374E1BD3956C00BC4D56 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -51,6 +56,22 @@
 		FAD737601BD3956C00BC4D56 /* 2048UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = 2048UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAD737641BD3956C00BC4D56 /* _048UITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = _048UITests.m; sourceTree = "<group>"; };
 		FAD737661BD3956C00BC4D56 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FAD737751BD39F8800BC4D56 /* PositionStruct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PositionStruct.h; sourceTree = "<group>"; };
+		FAD737761BD39F8800BC4D56 /* PositionStruct.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PositionStruct.m; sourceTree = "<group>"; };
+		FAD737781BD39FA000BC4D56 /* Grid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Grid.h; sourceTree = "<group>"; };
+		FAD737791BD39FA000BC4D56 /* Grid.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Grid.m; sourceTree = "<group>"; };
+		FAD7377A1BD39FA000BC4D56 /* GridOfObjects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GridOfObjects.h; sourceTree = "<group>"; };
+		FAD7377B1BD39FA000BC4D56 /* GridOfObjects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GridOfObjects.m; sourceTree = "<group>"; };
+		FAD7377E1BD39FAE00BC4D56 /* GridVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GridVC.h; sourceTree = "<group>"; };
+		FAD7377F1BD39FAE00BC4D56 /* GridVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GridVC.m; sourceTree = "<group>"; };
+		FAD737801BD39FAE00BC4D56 /* NoScrollGridVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoScrollGridVC.h; sourceTree = "<group>"; };
+		FAD737811BD39FAE00BC4D56 /* NoScrollGridVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoScrollGridVC.m; sourceTree = "<group>"; };
+		FAD737841BD39FBA00BC4D56 /* CodableObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CodableObject.h; sourceTree = "<group>"; };
+		FAD737851BD39FBA00BC4D56 /* CodableObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CodableObject.m; sourceTree = "<group>"; };
+		FAD737871BD3A7DF00BC4D56 /* TwentyFourtyEightVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwentyFourtyEightVC.h; sourceTree = "<group>"; };
+		FAD737881BD3A7DF00BC4D56 /* TwentyFourtyEightVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TwentyFourtyEightVC.m; sourceTree = "<group>"; };
+		FAD7378D1BD3AA8500BC4D56 /* TwentyFourtyEight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwentyFourtyEight.h; sourceTree = "<group>"; };
+		FAD7378E1BD3AA8500BC4D56 /* TwentyFourtyEight.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TwentyFourtyEight.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,11 +122,9 @@
 		FAD7373E1BD3956C00BC4D56 /* 2048 */ = {
 			isa = PBXGroup;
 			children = (
-				FAD737421BD3956C00BC4D56 /* AppDelegate.h */,
-				FAD737431BD3956C00BC4D56 /* AppDelegate.m */,
-				FAD737451BD3956C00BC4D56 /* ViewController.h */,
-				FAD737461BD3956C00BC4D56 /* ViewController.m */,
-				FAD737481BD3956C00BC4D56 /* Main.storyboard */,
+				FAD737721BD3979B00BC4D56 /* Controller */,
+				FAD737731BD397A200BC4D56 /* View */,
+				FAD737741BD397AB00BC4D56 /* Model */,
 				FAD7374B1BD3956C00BC4D56 /* Assets.xcassets */,
 				FAD7374D1BD3956C00BC4D56 /* LaunchScreen.storyboard */,
 				FAD737501BD3956C00BC4D56 /* Info.plist */,
@@ -138,6 +157,46 @@
 				FAD737661BD3956C00BC4D56 /* Info.plist */,
 			);
 			path = 2048UITests;
+			sourceTree = "<group>";
+		};
+		FAD737721BD3979B00BC4D56 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				FAD737421BD3956C00BC4D56 /* AppDelegate.h */,
+				FAD737431BD3956C00BC4D56 /* AppDelegate.m */,
+				FAD737871BD3A7DF00BC4D56 /* TwentyFourtyEightVC.h */,
+				FAD737881BD3A7DF00BC4D56 /* TwentyFourtyEightVC.m */,
+				FAD7377E1BD39FAE00BC4D56 /* GridVC.h */,
+				FAD7377F1BD39FAE00BC4D56 /* GridVC.m */,
+				FAD737801BD39FAE00BC4D56 /* NoScrollGridVC.h */,
+				FAD737811BD39FAE00BC4D56 /* NoScrollGridVC.m */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		FAD737731BD397A200BC4D56 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				FAD737481BD3956C00BC4D56 /* Main.storyboard */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		FAD737741BD397AB00BC4D56 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				FAD737841BD39FBA00BC4D56 /* CodableObject.h */,
+				FAD737851BD39FBA00BC4D56 /* CodableObject.m */,
+				FAD737751BD39F8800BC4D56 /* PositionStruct.h */,
+				FAD737761BD39F8800BC4D56 /* PositionStruct.m */,
+				FAD737781BD39FA000BC4D56 /* Grid.h */,
+				FAD737791BD39FA000BC4D56 /* Grid.m */,
+				FAD7377A1BD39FA000BC4D56 /* GridOfObjects.h */,
+				FAD7377B1BD39FA000BC4D56 /* GridOfObjects.m */,
+				FAD7378D1BD3AA8500BC4D56 /* TwentyFourtyEight.h */,
+				FAD7378E1BD3AA8500BC4D56 /* TwentyFourtyEight.m */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -270,9 +329,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FAD737471BD3956C00BC4D56 /* ViewController.m in Sources */,
+				FAD7377C1BD39FA000BC4D56 /* Grid.m in Sources */,
+				FAD737771BD39F8800BC4D56 /* PositionStruct.m in Sources */,
+				FAD737861BD39FBA00BC4D56 /* CodableObject.m in Sources */,
+				FAD7378F1BD3AA8500BC4D56 /* TwentyFourtyEight.m in Sources */,
+				FAD737891BD3A7DF00BC4D56 /* TwentyFourtyEightVC.m in Sources */,
+				FAD7377D1BD39FA000BC4D56 /* GridOfObjects.m in Sources */,
 				FAD737441BD3956C00BC4D56 /* AppDelegate.m in Sources */,
 				FAD737411BD3956C00BC4D56 /* main.m in Sources */,
+				FAD737831BD39FAE00BC4D56 /* NoScrollGridVC.m in Sources */,
+				FAD737821BD39FAE00BC4D56 /* GridVC.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

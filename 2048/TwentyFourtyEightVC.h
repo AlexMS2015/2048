@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  TwentyFourtyEightVC.h
 //  2048
 //
 //  Created by Alex Smith on 18/10/2015.
@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
-
+@interface TwentyFourtyEightVC : UIViewController
 
 @end
-
