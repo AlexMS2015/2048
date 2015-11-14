@@ -7,6 +7,7 @@
 
 #import <Foundation/Foundation.h>
 #import "Grid.h"
+#import "NSArray+Reverse.h"
 
 @interface GridOfObjects : Grid
 
@@ -25,9 +26,9 @@
 -(void)swapObjectAtPosition:(Position)position1 withObjectAtPosition:(Position)position2;
 
 // new methods
--(NSArray *)objectsInRow:(int)row;
--(NSArray *)objectsInColumn:(int)column;
--(void)replaceObjectsInRow:(int)row withObjects:(NSArray *)objects;
--(void)replaceObjectsInColumn:(int)col withObjects:(NSArray *)objects;
+-(NSArray *)objectsInRow:(int)row reversed:(BOOL)reversed;
+-(NSArray *)objectsInColumn:(int)column reversed:(BOOL)reversed;
+-(void)replaceObjectsInRow:(int)row withObjects:(NSArray *)objects reversed:(BOOL)reversed;
+-(void)replaceObjectsInColumn:(int)col withObjects:(NSArray *)objects reversed:(BOOL)reversed;
 
 @end

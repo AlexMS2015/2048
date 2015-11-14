@@ -22,5 +22,6 @@ typedef enum {
 
 -(instancetype)initWithGameOfSize:(GridSize)size;
 -(void)swipeInDirection:(SwipeDirection)direction;
+//-(void)swipeInDirection:(NSString *)direction;
 
 @end

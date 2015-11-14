@@ -10,7 +10,7 @@
 #import "TwentyFourtyEight.h"
 #import "NoScrollGridVC.h"
 
-@interface TwentyFourtyEightVC ()
+@interface TwentyFourtyEightVC () <GridVCDelegate>
 
 @property (strong, nonatomic) NoScrollGridVC *boardCVC;
 @property (strong, nonatomic) TwentyFourtyEight *game;
@@ -22,7 +22,35 @@
 
 @implementation TwentyFourtyEightVC
 
+#pragma mark - GridVCDelegate
+
+-(void)swipedInDirection:(UISwipeGestureRecognizerDirection)direction
+{
+    switch (direction) {
+        case UISwipeGestureRecognizerDirectionLeft:
+            [self.game swipeInDirection:LEFT];
+            break;
+        case UISwipeGestureRecognizerDirectionRight:
+            [self.game swipeInDirection:RIGHT];
+            break;
+        case UISwipeGestureRecognizerDirectionUp:
+            [self.game swipeInDirection:UP];
+            break;
+        case UISwipeGestureRecognizerDirectionDown:
+            [self.game swipeInDirection:DOWN];
+            break;
+        default:
+            break;
+    }
+}
+
 #pragma mark - Properties
+
+-(void)setBoardCVC:(NoScrollGridVC *)boardCVC
+{
+    _boardCVC = boardCVC;
+    _boardCVC.delegate = self;
+}
 
 -(void)setGame:(TwentyFourtyEight *)game
 {

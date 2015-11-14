@@ -48,7 +48,7 @@
                              withObjectAtIndex:[self indexOfPosition:position2]];
 }
 
--(NSArray *)objectsInRow:(int)row
+-(NSArray *)objectsInRow:(int)row reversed:(BOOL)reversed
 {
     NSMutableArray *objectsInRow = [NSMutableArray array];
     for (int currCol = 0; currCol < self.size.columns; currCol++) {
@@ -56,10 +56,11 @@
         [objectsInRow addObject:[self objectAtPosition:currPos]];
     }
     
-    return [NSArray arrayWithArray:objectsInRow];
+    return reversed ? [[NSArray arrayWithArray:objectsInRow] arrayInReverseOrder] :
+                       [NSArray arrayWithArray:objectsInRow] ;
 }
 
--(NSArray *)objectsInColumn:(int)column
+-(NSArray *)objectsInColumn:(int)column reversed:(BOOL)reversed
 {
     NSMutableArray *objectsInCol = [NSMutableArray array];
     for (int currRow = 0; currRow < self.size.columns; currRow++) {
@@ -67,7 +68,35 @@
         [objectsInCol addObject:[self objectAtPosition:currPos]];
     }
     
-    return [NSArray arrayWithArray:objectsInCol];
+    return reversed ? [[NSArray arrayWithArray:objectsInCol] arrayInReverseOrder] :
+                        [NSArray arrayWithArray:objectsInCol];
+}
+
+-(void)replaceObjectsInRow:(int)row withObjects:(NSArray *)objects reversed:(BOOL)reversed
+{
+#warning - Could iterate using the 'position for index' method in a single loop?
+    
+    NSArray *replacementObjects = reversed ? [objects arrayInReverseOrder] : objects;
+    
+    if ([objects count] == self.size.columns) { // check the right number of objects were passed in
+        for (int col = 0; col < self.size.columns; col++) {
+            Position objPos = (Position){row, col};
+            [self setPosition:objPos toObject:replacementObjects[col]];
+        }
+    }
+}
+
+-(void)replaceObjectsInColumn:(int)col withObjects:(NSArray *)objects reversed:(BOOL)reversed
+{
+    NSArray *replacementObjects = reversed ? [objects arrayInReverseOrder] : objects;
+    
+    if ([objects count] == self.size.rows) { // check the right number of objects were passed in
+        for (int row = 0; row < self.size.rows; row++) {
+            Position objPos = (Position){row, col};
+            [self setPosition:objPos toObject:replacementObjects[row]];
+        }
+    }
+
 }
 
 -(NSString *)description
@@ -85,28 +114,6 @@
     }
     
     return descriptionString;
-}
-
--(void)replaceObjectsInRow:(int)row withObjects:(NSArray *)objects
-{
-#warning - Could iterate using the 'position for index' method in a single loop?
-    
-    if ([objects count] == self.size.columns) { // check the right number of objects were passed in
-        for (int col = 0; col < self.size.columns; col++) {
-            Position objPos = (Position){row, col};
-            [self setPosition:objPos toObject:objects[col]];
-        }
-    }
-}
-
--(void)replaceObjectsInColumn:(int)col withObjects:(NSArray *)objects{
-    if ([objects count] == self.size.rows) { // check the right number of objects were passed in
-        for (int row = 0; row < self.size.rows; row++) {
-            Position objPos = (Position){row, col};
-            [self setPosition:objPos toObject:objects[row]];
-        }
-    }
-
 }
 
 #pragma mark - Properties

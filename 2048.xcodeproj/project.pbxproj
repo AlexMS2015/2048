@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FA239F6B1BF69B4900DB3FF9 /* NSArray+Reverse.m in Sources */ = {isa = PBXBuildFile; fileRef = FA239F6A1BF69B4900DB3FF9 /* NSArray+Reverse.m */; settings = {ASSET_TAGS = (); }; };
 		FAD737411BD3956C00BC4D56 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FAD737401BD3956C00BC4D56 /* main.m */; };
 		FAD737441BD3956C00BC4D56 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FAD737431BD3956C00BC4D56 /* AppDelegate.m */; };
 		FAD7374A1BD3956C00BC4D56 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FAD737481BD3956C00BC4D56 /* Main.storyboard */; };
@@ -42,6 +43,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		FA239F691BF69B4900DB3FF9 /* NSArray+Reverse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Reverse.h"; sourceTree = "<group>"; };
+		FA239F6A1BF69B4900DB3FF9 /* NSArray+Reverse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Reverse.m"; sourceTree = "<group>"; };
 		FAD7373C1BD3956C00BC4D56 /* 2048.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = 2048.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAD737401BD3956C00BC4D56 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		FAD737421BD3956C00BC4D56 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -99,6 +102,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		FA239F651BF69AF800DB3FF9 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				FA239F691BF69B4900DB3FF9 /* NSArray+Reverse.h */,
+				FA239F6A1BF69B4900DB3FF9 /* NSArray+Reverse.m */,
+			);
+			name = Categories;
+			sourceTree = "<group>";
+		};
 		FAD737331BD3956C00BC4D56 = {
 			isa = PBXGroup;
 			children = (
@@ -122,6 +134,7 @@
 		FAD7373E1BD3956C00BC4D56 /* 2048 */ = {
 			isa = PBXGroup;
 			children = (
+				FA239F651BF69AF800DB3FF9 /* Categories */,
 				FAD737721BD3979B00BC4D56 /* Controller */,
 				FAD737731BD397A200BC4D56 /* View */,
 				FAD737741BD397AB00BC4D56 /* Model */,
@@ -335,6 +348,7 @@
 				FAD7378F1BD3AA8500BC4D56 /* TwentyFourtyEight.m in Sources */,
 				FAD737891BD3A7DF00BC4D56 /* TwentyFourtyEightVC.m in Sources */,
 				FAD7377D1BD39FA000BC4D56 /* GridOfObjects.m in Sources */,
+				FA239F6B1BF69B4900DB3FF9 /* NSArray+Reverse.m in Sources */,
 				FAD737441BD3956C00BC4D56 /* AppDelegate.m in Sources */,
 				FAD737411BD3956C00BC4D56 /* main.m in Sources */,
 				FAD737831BD39FAE00BC4D56 /* NoScrollGridVC.m in Sources */,
@@ -564,6 +578,7 @@
 				FAD7376B1BD3956C00BC4D56 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		FAD7376C1BD3956C00BC4D56 /* Build configuration list for PBXNativeTarget "2048Tests" */ = {
 			isa = XCConfigurationList;
@@ -572,6 +587,7 @@
 				FAD7376E1BD3956C00BC4D56 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		FAD7376F1BD3956C00BC4D56 /* Build configuration list for PBXNativeTarget "2048UITests" */ = {
 			isa = XCConfigurationList;
@@ -580,6 +596,7 @@
 				FAD737711BD3956C00BC4D56 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

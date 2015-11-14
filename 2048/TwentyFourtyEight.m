@@ -7,6 +7,7 @@
 //
 
 #import "TwentyFourtyEight.h"
+#import "NSArray+Reverse.h"
 
 @interface TwentyFourtyEight ()
 
@@ -17,6 +18,8 @@
 @end
 
 @implementation TwentyFourtyEight
+
+#pragma mark - Initialiser
 
 -(instancetype)initWithGameOfSize:(GridSize)size;
 {
@@ -33,48 +36,51 @@
         [self newTile];
         [self newTile];
         
-        for (int i = 0; i < 10; i++) {
+        /*for (int i = 0; i < 10; i++) {
             NSLog(@"BOARD BEFORE");
             NSLog(@"%@", self.board);
-            [self swipeInDirection:RIGHT];
+            [self swipeInDirection:UP];
             NSLog(@"BOARD AFTER");
             NSLog(@"%@", self.board);
             [self newTile];
-        }
+        }*/
 
     }
     
     return self;
 }
 
+#pragma mark - Other
+
 -(void)swipeInDirection:(SwipeDirection)direction;
 {
+    NSLog(@"BOARD BEFORE");
+    NSLog(@"%@", self.board);
+
+    NSArray *tilesToMerge;
+    NSArray *mergedTiles;
+    
     if (direction == LEFT || direction == RIGHT) {
         for (int row = 0; row < self.board.size.rows; row++) {
-            NSArray *tilesToMerge = [self.board objectsInRow:row];
             
-            if (direction == RIGHT) {
-                NSMutableArray *tempTiles = [NSMutableArray array];
-                for (NSNumber *tile in [tilesToMerge reverseObjectEnumerator]) {
-                    [tempTiles addObject:tile];
-                }
-                tilesToMerge = [NSArray arrayWithArray:tempTiles];
-            }
+            tilesToMerge = [self.board objectsInRow:row reversed:direction == RIGHT];
+            mergedTiles = [self mergeLine:tilesToMerge];
             
-#warning - Make a 'reverse array' category. Also put more comments in this method!
-            NSArray *mergedTiles = [self mergeLine:tilesToMerge];
+            [self.board replaceObjectsInRow:row withObjects:mergedTiles reversed:direction == RIGHT];
+        }
+    } else if (direction == UP || direction == DOWN) {
+        for (int col = 0; col < self.board.size.columns; col++) {
             
-            if (direction == RIGHT) {
-                NSMutableArray *tempTiles = [NSMutableArray array];
-                for (NSNumber *tile in [mergedTiles reverseObjectEnumerator]) {
-                    [tempTiles addObject:tile];
-                }
-                mergedTiles = [NSArray arrayWithArray:tempTiles];
-            }
+            tilesToMerge = [self.board objectsInColumn:col reversed:direction == DOWN];
+            mergedTiles = [self mergeLine:tilesToMerge];
             
-            [self.board replaceObjectsInRow:row withObjects:mergedTiles];
+            [self.board replaceObjectsInColumn:col withObjects:mergedTiles reversed:direction == DOWN];
         }
     }
+    
+    NSLog(@"BOARD AFTER");
+    NSLog(@"%@", self.board);
+    [self newTile];
 }
 
 -(void)newTile
