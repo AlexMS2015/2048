@@ -42,23 +42,38 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Score: 0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zBP-M8-y0W">
+                                <rect key="frame" x="516" y="571" width="64" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="XUf-b1-oz1" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="5c6-h2-fAH"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="zBP-M8-y0W" secondAttribute="bottom" constant="8" id="Qlb-gK-W7e"/>
                             <constraint firstItem="XUf-b1-oz1" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="SRE-TA-hVX"/>
                             <constraint firstAttribute="trailingMargin" secondItem="XUf-b1-oz1" secondAttribute="trailing" id="T6e-be-xrV"/>
-                            <constraint firstItem="XUf-b1-oz1" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="aKb-71-QQ6"/>
-                            <constraint firstItem="XUf-b1-oz1" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="yja-qG-bJp"/>
+                            <constraint firstItem="XUf-b1-oz1" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="nsK-8l-Ebd"/>
+                            <constraint firstItem="zBP-M8-y0W" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="v3Z-CT-tbp"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="2048" id="eWd-Bl-dHf"/>
+                    <navigationItem key="navigationItem" title="2048" id="eWd-Bl-dHf">
+                        <barButtonItem key="rightBarButtonItem" title="New" id="DzD-8V-1eQ">
+                            <connections>
+                                <action selector="newGame:" destination="BYZ-38-t0r" id="xfZ-mv-drO"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="boardView" destination="XUf-b1-oz1" id="uzg-iq-kXC"/>
+                        <outlet property="scoreLabel" destination="zBP-M8-y0W" id="WH9-81-1C9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="888" y="237"/>
+            <point key="canvasLocation" x="840" y="237"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="YxU-UP-0cu">

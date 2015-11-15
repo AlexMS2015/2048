@@ -35,16 +35,6 @@
         
         [self newTile];
         [self newTile];
-        
-        /*for (int i = 0; i < 10; i++) {
-            NSLog(@"BOARD BEFORE");
-            NSLog(@"%@", self.board);
-            [self swipeInDirection:UP];
-            NSLog(@"BOARD AFTER");
-            NSLog(@"%@", self.board);
-            [self newTile];
-        }*/
-
     }
     
     return self;
@@ -78,9 +68,11 @@
         }
     }
     
+    [self newTile];
+    
     NSLog(@"BOARD AFTER");
     NSLog(@"%@", self.board);
-    [self newTile];
+    NSLog(@"\n Score is %d", self.score);
 }
 
 -(void)newTile
@@ -104,6 +96,9 @@
     
     // place tile value in the random blank spot
     [self.board setPosition:randomPos toObject:[NSNumber numberWithInt:tileValue]];
+    
+    // add the tile's value to the score
+    self.score += tileValue;
 }
 
 -(NSArray *)mergeLine:(NSArray *)line

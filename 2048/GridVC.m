@@ -36,6 +36,9 @@
             self.cellWidth = self.collectionView.bounds.size.width / self.grid.size.columns;
             self.cellHeight = self.collectionView.bounds.size.height / self.grid.size.rows;
         }
+        
+        NSLog(@"cell w = %f", _cellWidth);
+        NSLog(@"height h = %f", self.cellHeight);
     }
     
     return _cellWidth;

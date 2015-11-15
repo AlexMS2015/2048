@@ -18,10 +18,9 @@ typedef enum {
 
 @property (nonatomic, readonly) BOOL gameInPlay;
 @property (nonatomic, readonly) int score;
-@property (nonatomic, strong, readonly) GridOfObjects *board;
+@property (nonatomic, strong, readonly) GridOfObjects *board; // tile values are stored as NSNumber objects
 
 -(instancetype)initWithGameOfSize:(GridSize)size;
 -(void)swipeInDirection:(SwipeDirection)direction;
-//-(void)swipeInDirection:(NSString *)direction;
 
 @end
