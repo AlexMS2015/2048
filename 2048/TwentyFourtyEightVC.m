@@ -113,7 +113,7 @@
 #pragma mark - View Life Cycle
 
 #define DEFAULT_ROWS 4
-#define DEFAULT_COLS 3
+#define DEFAULT_COLS 4
 -(void)viewDidLoad
 {
     [self newGameWithRows:DEFAULT_ROWS andColumns:DEFAULT_COLS];
