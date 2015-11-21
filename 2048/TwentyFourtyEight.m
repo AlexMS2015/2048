@@ -8,12 +8,14 @@
 
 #import "TwentyFourtyEight.h"
 #import "NSArray+Reverse.h"
+#import "TwentyFourtyEightTileOffset.h"
 
 @interface TwentyFourtyEight ()
 
 @property (nonatomic) BOOL gameInPlay;
 @property (nonatomic) int score;
 @property (nonatomic, strong) GridOfObjects *board;
+@property (nonatomic, strong) GridOfObjects *offsetsForMostRecentMove;
 
 @end
 
@@ -25,6 +27,7 @@
 {
     if (self = [super init]) {
         self.board = [[GridOfObjects alloc] initWithGridSize:size andOrientation:VERTICAL];
+        self.offsetsForMostRecentMove = [[GridOfObjects alloc] initWithGridSize:size andOrientation:VERTICAL];
         
         // set all tiles to 0 initially
         for (int row = 0; row < self.board.size.rows; row++) {
@@ -42,37 +45,40 @@
 
 #pragma mark - Other
 
--(void)swipeInDirection:(SwipeDirection)direction;
+-(void)swipeInDirection:(NSString *)direction;
 {
-    NSLog(@"BOARD BEFORE");
-    NSLog(@"%@", self.board);
-
-    NSArray *tilesToMerge;
-    NSArray *mergedTiles;
+    //NSLog(@"BOARD BEFORE");
+    //NSLog(@"%@", self.board);
+#warning - This isn't really neccessary?
+    self.offsetsForMostRecentMove = [[GridOfObjects alloc] initWithGridSize:self.board.size andOrientation:VERTICAL];
     
-    if (direction == LEFT || direction == RIGHT) {
+    NSArray *tilesToMerge;
+    NSArray *mergedTilesAndOffsets;
+    
+    if ([direction isEqualToString:@"LEFT"] || [direction isEqualToString:@"RIGHT"]) {
         for (int row = 0; row < self.board.size.rows; row++) {
+            tilesToMerge = [self.board objectsInRow:row reversed:NO];
             
-            tilesToMerge = [self.board objectsInRow:row reversed:direction == RIGHT];
-            mergedTiles = [self mergeLine:tilesToMerge];
-            
-            [self.board replaceObjectsInRow:row withObjects:mergedTiles reversed:direction == RIGHT];
+            mergedTilesAndOffsets = [self mergeLine:tilesToMerge inDirection:direction];
+            [self.board replaceObjectsInRow:row withObjects:[mergedTilesAndOffsets firstObject] reversed:NO];
+            [self.offsetsForMostRecentMove replaceObjectsInRow:row withObjects:[mergedTilesAndOffsets lastObject] reversed:NO];
         }
-    } else if (direction == UP || direction == DOWN) {
+    } else if ([direction isEqualToString:@"UP"] || [direction isEqualToString:@"DOWN"]) {
         for (int col = 0; col < self.board.size.columns; col++) {
+            tilesToMerge = [self.board objectsInColumn:col reversed:NO];
             
-            tilesToMerge = [self.board objectsInColumn:col reversed:direction == DOWN];
-            mergedTiles = [self mergeLine:tilesToMerge];
-            
-            [self.board replaceObjectsInColumn:col withObjects:mergedTiles reversed:direction == DOWN];
+            mergedTilesAndOffsets = [self mergeLine:tilesToMerge inDirection:direction];
+            [self.board replaceObjectsInColumn:col withObjects:[mergedTilesAndOffsets firstObject] reversed:NO];
+            [self.offsetsForMostRecentMove replaceObjectsInColumn:col withObjects:[mergedTilesAndOffsets lastObject] reversed:NO];
         }
     }
     
+    //self.score += 1;
     [self newTile];
     
-    NSLog(@"BOARD AFTER");
-    NSLog(@"%@", self.board);
-    NSLog(@"\n Score is %d", self.score);
+    //NSLog(@"BOARD AFTER");
+    //NSLog(@"%@", self.board);
+    //NSLog(@"%@", self.offsetsForMostRecentMove);
 }
 
 -(void)newTile
@@ -101,7 +107,115 @@
     self.score += tileValue;
 }
 
--(NSArray *)mergeLine:(NSArray *)line
+-(NSDictionary *)directionOffsets
+{
+    return @{@"UP" : @[@(-1), @(0)],
+             @"DOWN" : @[@(1), @(0)],
+             @"LEFT" : @[@(0), @(-1)],
+             @"RIGHT" : @[@(0), @(1)]};
+}
+
+-(NSArray *)directionToReverse
+{
+    return @[@"DOWN", @"RIGHT"];
+}
+
+-(NSArray *)mergeLine:(NSArray *)line inDirection:(NSString *)direction
+{
+    //NSLog(@"Unmerged Line: %@", line);
+    
+    NSMutableArray *mergedLine = [line mutableCopy];
+    
+    NSMutableArray *offsets = [NSMutableArray array];
+    for (int i = 0; i < [mergedLine count]; i++)
+        [offsets addObject:[[TwentyFourtyEightTileOffset alloc] init]];
+    
+    NSArray *offsetForDir = [self directionOffsets][direction];
+    int rowOffset = [[offsetForDir firstObject] intValue];
+    int colOffset = [[offsetForDir lastObject] intValue];
+    
+    if ([[self directionToReverse] containsObject:direction]) {
+        mergedLine = [[mergedLine arrayInReverseOrder] mutableCopy];
+        offsets = [[offsets arrayInReverseOrder] mutableCopy];
+    }
+    
+    for (int tileIdx = 1; tileIdx < [mergedLine count]; tileIdx++) {
+        if ([mergedLine[tileIdx] intValue] != 0) {
+            TwentyFourtyEightTileOffset *offset = offsets[tileIdx];
+            for (int tileIdx2 = tileIdx - 1; tileIdx2 >= 0; tileIdx2--) {
+                if ([mergedLine[tileIdx2] intValue] == 0) {
+                    [mergedLine exchangeObjectAtIndex:tileIdx2 withObjectAtIndex:tileIdx2 + 1];
+                    offset.rowOffset += rowOffset;
+                    offset.colOffset += colOffset;
+                } else if ([mergedLine[tileIdx2] isEqualToNumber:mergedLine[tileIdx2 +1]]) {
+                    TwentyFourtyEightTileOffset *offsetAtIdx2 = (TwentyFourtyEightTileOffset *)offsets[tileIdx2];
+                    
+                    if (offsetAtIdx2.merged == NO) {
+                        int summedVal = 2 * [mergedLine[tileIdx2] intValue];
+                        mergedLine[tileIdx2] = [NSNumber numberWithInt:summedVal];
+                        mergedLine[tileIdx2 + 1] = [NSNumber numberWithInt:0];
+                        
+                        offsetAtIdx2.merged = YES;
+                        offset.rowOffset += rowOffset;
+                        offset.colOffset += colOffset;
+                        
+                        offset.visible = NO;
+                        self.score += summedVal;
+                        
+                        break; // prevents multiple merges (e.g. [4, 2, 2] becoming [8, 0, 0] instead of [4, 4, 0]
+                    }
+                }
+            }
+        }
+    }
+    
+    if ([[self directionToReverse] containsObject:direction]) {
+        mergedLine = [[mergedLine arrayInReverseOrder] mutableCopy];
+        offsets = [[offsets arrayInReverseOrder] mutableCopy];
+    }
+    
+    //NSLog(@"Merged Line: %@", mergedLine);
+    //NSLog(@"Offsets: %@", offsets);
+    
+    return @[mergedLine, offsets];
+}
+
+#pragma mark - Old Code
+
+/*-(void)swipeInDirection:(SwipeDirection)direction;
+{
+    //NSLog(@"BOARD BEFORE");
+    //NSLog(@"%@", self.board);
+    
+    NSArray *tilesToMerge;
+    NSArray *mergedTiles;
+    
+    if (direction == LEFT || direction == RIGHT) {
+        for (int row = 0; row < self.board.size.rows; row++) {
+            
+            tilesToMerge = [self.board objectsInRow:row reversed:direction == RIGHT];
+            mergedTiles = [self mergeLine:tilesToMerge];
+            
+            [self.board replaceObjectsInRow:row withObjects:mergedTiles reversed:direction == RIGHT];
+        }
+    } else if (direction == UP || direction == DOWN) {
+        for (int col = 0; col < self.board.size.columns; col++) {
+            
+            tilesToMerge = [self.board objectsInColumn:col reversed:direction == DOWN];
+            mergedTiles = [self mergeLine:tilesToMerge];
+            
+            [self.board replaceObjectsInColumn:col withObjects:mergedTiles reversed:direction == DOWN];
+        }
+    }
+    
+    [self newTile];
+    
+    //NSLog(@"BOARD AFTER");
+    //NSLog(@"%@", self.board);
+    //NSLog(@"\n Score is %d", self.score);
+}*/
+
+/*-(NSArray *)mergeLine:(NSArray *)line
 {
     NSMutableArray *mergedLine = [line mutableCopy];
     
@@ -133,6 +247,6 @@
     }
     
     return [NSArray arrayWithArray:mergedLine];
-}
+}*/
 
 @end

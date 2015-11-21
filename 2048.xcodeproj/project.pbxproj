@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		FA239F6B1BF69B4900DB3FF9 /* NSArray+Reverse.m in Sources */ = {isa = PBXBuildFile; fileRef = FA239F6A1BF69B4900DB3FF9 /* NSArray+Reverse.m */; settings = {ASSET_TAGS = (); }; };
+		FA239F711BFB292C00DB3FF9 /* TwentyFourtyEightTileOffset.m in Sources */ = {isa = PBXBuildFile; fileRef = FA239F701BFB292C00DB3FF9 /* TwentyFourtyEightTileOffset.m */; settings = {ASSET_TAGS = (); }; };
 		FAD737411BD3956C00BC4D56 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FAD737401BD3956C00BC4D56 /* main.m */; };
 		FAD737441BD3956C00BC4D56 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FAD737431BD3956C00BC4D56 /* AppDelegate.m */; };
 		FAD7374A1BD3956C00BC4D56 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FAD737481BD3956C00BC4D56 /* Main.storyboard */; };
@@ -45,6 +46,8 @@
 /* Begin PBXFileReference section */
 		FA239F691BF69B4900DB3FF9 /* NSArray+Reverse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Reverse.h"; sourceTree = "<group>"; };
 		FA239F6A1BF69B4900DB3FF9 /* NSArray+Reverse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Reverse.m"; sourceTree = "<group>"; };
+		FA239F6F1BFB292C00DB3FF9 /* TwentyFourtyEightTileOffset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwentyFourtyEightTileOffset.h; sourceTree = "<group>"; };
+		FA239F701BFB292C00DB3FF9 /* TwentyFourtyEightTileOffset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TwentyFourtyEightTileOffset.m; sourceTree = "<group>"; };
 		FAD7373C1BD3956C00BC4D56 /* 2048.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = 2048.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAD737401BD3956C00BC4D56 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		FAD737421BD3956C00BC4D56 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -208,6 +211,8 @@
 				FAD7377B1BD39FA000BC4D56 /* GridOfObjects.m */,
 				FAD7378D1BD3AA8500BC4D56 /* TwentyFourtyEight.h */,
 				FAD7378E1BD3AA8500BC4D56 /* TwentyFourtyEight.m */,
+				FA239F6F1BFB292C00DB3FF9 /* TwentyFourtyEightTileOffset.h */,
+				FA239F701BFB292C00DB3FF9 /* TwentyFourtyEightTileOffset.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -344,6 +349,7 @@
 			files = (
 				FAD7377C1BD39FA000BC4D56 /* Grid.m in Sources */,
 				FAD737771BD39F8800BC4D56 /* PositionStruct.m in Sources */,
+				FA239F711BFB292C00DB3FF9 /* TwentyFourtyEightTileOffset.m in Sources */,
 				FAD737861BD39FBA00BC4D56 /* CodableObject.m in Sources */,
 				FAD7378F1BD3AA8500BC4D56 /* TwentyFourtyEight.m in Sources */,
 				FAD737891BD3A7DF00BC4D56 /* TwentyFourtyEightVC.m in Sources */,
@@ -443,7 +449,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -481,7 +487,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -494,6 +500,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = 2048/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "AS.-048";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -505,6 +512,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = 2048/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "AS.-048";
 				PRODUCT_NAME = "$(TARGET_NAME)";

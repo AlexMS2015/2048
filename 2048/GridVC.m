@@ -37,8 +37,8 @@
             self.cellHeight = self.collectionView.bounds.size.height / self.grid.size.rows;
         }
         
-        NSLog(@"cell w = %f", _cellWidth);
-        NSLog(@"height h = %f", self.cellHeight);
+        //NSLog(@"cell w = %f", _cellWidth);
+        //NSLog(@"height h = %f", self.cellHeight);
     }
     
     return _cellWidth;
@@ -99,7 +99,8 @@
     int objIndex = (int)indexPath.item;
     Position currentPos = [self.grid positionOfIndex:objIndex];
     UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:indexPath];
-    self.cellTapHandler(cell, currentPos, objIndex);
+    if (self.cellTapHandler)
+        self.cellTapHandler(cell, currentPos, objIndex);
 }
 
 #pragma mark - UICollectionViewDelegateFlowLayout

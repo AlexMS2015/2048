@@ -13,11 +13,12 @@
 
 #warning - THERE NEEDS TO BE A CHECK TO STOP INSERTING AT POSITONS OUTSIDE THE GRID (too large)
 
+#warning - WHY is this public?
 @property (nonatomic, strong) NSArray *objects;
 
--(instancetype)initWithSize:(GridSize)size
-             andOrientation:(Orientation)orientation
-                 andObjects:(NSArray *)objects;
+-(instancetype)initWithGridSize:(GridSize)size
+                 andOrientation:(Orientation)orientation
+                     andObjects:(NSArray *)objects; // will initiate with NSNull object in every position if the superclass's initialiser is used or no objects are provided to this method
 
 -(id)objectAtPosition:(Position)position;
 -(Position)positionOfObject:(id)object;

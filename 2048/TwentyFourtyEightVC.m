@@ -9,6 +9,7 @@
 #import "TwentyFourtyEightVC.h"
 #import "TwentyFourtyEight.h"
 #import "NoScrollGridVC.h"
+#import "TwentyFourtyEightTileOffset.h"
 
 @interface TwentyFourtyEightVC () <GridVCDelegate>
 
@@ -19,6 +20,7 @@
 
 // outlets
 @property (weak, nonatomic) IBOutlet UICollectionView *boardView;
+@property (weak, nonatomic) IBOutlet UIView *boardContainerView;
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
 
 @end
@@ -28,6 +30,9 @@
 -(void)newGameWithRows:(int)rows andColumns:(int)cols
 {
     [self.game removeObserver:self forKeyPath:@"score"];
+    for (id obj in self.boardView.subviews) {
+        [obj removeFromSuperview];
+    }
     self.game = [[TwentyFourtyEight alloc] initWithGameOfSize:(GridSize){rows, cols}];
 }
 
@@ -37,16 +42,16 @@
 {
     switch (direction) {
         case UISwipeGestureRecognizerDirectionLeft:
-            [self.game swipeInDirection:LEFT];
+            [self.game swipeInDirection:@"LEFT"];
             break;
         case UISwipeGestureRecognizerDirectionRight:
-            [self.game swipeInDirection:RIGHT];
+            [self.game swipeInDirection:@"RIGHT"];
             break;
         case UISwipeGestureRecognizerDirectionUp:
-            [self.game swipeInDirection:UP];
+            [self.game swipeInDirection:@"UP"];
             break;
         case UISwipeGestureRecognizerDirectionDown:
-            [self.game swipeInDirection:DOWN];
+            [self.game swipeInDirection:@"DOWN"];
             break;
         default:
             break;
@@ -77,24 +82,55 @@
     
     self.boardCVC = [[NoScrollGridVC alloc] initWithgridSize:self.game.board.size collectionView:self.boardView andCellConfigureBlock:^(UICollectionViewCell *cell, Position position, int index) {
         if ([cell.contentView.subviews count] == 0) {
-            cell.contentView.layer.borderColor = [UIColor blackColor].CGColor;
-            cell.contentView.layer.borderWidth = 0.5;
             NSNumber *valueAtCurrPos = [self.game.board objectAtPosition:position];
             cell.contentView.backgroundColor = self.tileColours[valueAtCurrPos];
             UILabel *cellValueLabel = [[UILabel alloc] initWithFrame:cell.contentView.bounds];
             cellValueLabel.textAlignment = NSTextAlignmentCenter;
             cellValueLabel.font = [UIFont systemFontOfSize:28];
             cellValueLabel.text = [valueAtCurrPos isEqualToNumber:@0] ? @"" : [valueAtCurrPos stringValue];
+            //cellValueLabel.layer.borderColor = [UIColor blackColor].CGColor;
+            //cellValueLabel.layer.borderWidth = 1;
             [cell.contentView addSubview:cellValueLabel];
         } else {
             UILabel *cellValueLabel = [[cell.contentView subviews] firstObject];
-            NSNumber *valueAtCurrPos = [self.game.board objectAtPosition:position];
-            cell.contentView.backgroundColor = self.tileColours[valueAtCurrPos];
-            cellValueLabel.text = [valueAtCurrPos isEqualToNumber:@0] ? @"" : [valueAtCurrPos stringValue];
+            
+            TwentyFourtyEightTileOffset *offsetForCurrPos = [self.game.offsetsForMostRecentMove objectAtPosition:position];
+            if (offsetForCurrPos.rowOffset != 0 || offsetForCurrPos.colOffset != 0) {
+             
+                UILabel *dummyLabel = [[UILabel alloc] initWithFrame:cell.frame];
+                dummyLabel.textAlignment = NSTextAlignmentCenter;
+                dummyLabel.font = [UIFont systemFontOfSize:28];
+                dummyLabel.text = @"HELLO";
+                [self.boardContainerView addSubview:dummyLabel];
+                
+                Position newPos = (Position){position.row + offsetForCurrPos.rowOffset, position.column + offsetForCurrPos.colOffset};
+                int index = [self.boardCVC.grid indexOfPosition:newPos];
+                NSIndexPath *indexPath = [NSIndexPath indexPathForItem:index inSection:0];
+                CGRect frame = [self.boardView cellForItemAtIndexPath:indexPath].frame;
+                
+                [UIView animateWithDuration:1.0
+                                 animations:^{
+                                     dummyLabel.frame = frame;
+                                 }
+                                 completion:^(BOOL finished) {
+                                     [dummyLabel removeFromSuperview];
+                                     NSNumber *valueAtCurrPos = [self.game.board objectAtPosition:position];
+                                     cell.contentView.backgroundColor = self.tileColours[valueAtCurrPos];
+                                     cellValueLabel.text = [valueAtCurrPos isEqualToNumber:@0] ? @"" : [valueAtCurrPos stringValue];
+                                 }];
+            } else {
+                NSNumber *valueAtCurrPos = [self.game.board objectAtPosition:position];
+                cell.contentView.backgroundColor = self.tileColours[valueAtCurrPos];
+                cellValueLabel.text = [valueAtCurrPos isEqualToNumber:@0] ? @"" : [valueAtCurrPos stringValue];
+            }
+
+   
+            
+
+            
+          
         }
-    } andCellTapHandler:^(UICollectionViewCell *cell, Position position, int index) {
-        
-    }];
+    } andCellTapHandler:NULL];
     
     [self.game addObserver:self forKeyPath:@"score" options:NSKeyValueObservingOptionNew context:nil];
     self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
@@ -107,6 +143,18 @@
     if ([keyPath isEqualToString:@"score"]) {
         self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
         [self.boardView reloadData];
+        
+        /*for (int row = 0; row < self.game.board.size.rows; row++) {
+            for (int col = 0; col < self.game.board.size.columns; col++) {
+                Position currPos = (Position){row, col};
+                TwentyFourtyEightTileOffset *offsetForCurrPos = [self.game.offsetsForMostRecentMove objectAtPosition:currPos];
+                if (offsetForCurrPos.rowOffset != 0 || offsetForCurrPos.colOffset != 0) {
+                    NSIndexPath *oldPosPath = [NSIndexPath indexPathForItem:[self.boardCVC.grid indexOfPosition:currPos] inSection:0];
+
+                    [self.boardView reloadItemsAtIndexPaths:@[oldPosPath]];
+                }
+            }
+        }*/
     }
 }
 

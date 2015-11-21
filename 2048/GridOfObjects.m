@@ -15,7 +15,8 @@
 
 @implementation GridOfObjects
 
--(instancetype)initWithSize:(GridSize)size andOrientation:(Orientation)orientation andObjects:(NSArray *)objects{
+-(instancetype)initWithGridSize:(GridSize)size andOrientation:(Orientation)orientation andObjects:(NSArray *)objects
+{
     if (self = [super initWithGridSize:size andOrientation:orientation]) {
         _objectsPrivate = [objects mutableCopy];
     }
@@ -131,7 +132,12 @@
 -(NSMutableArray *)objectsPrivate
 {
     if (!_objectsPrivate)
+    {
         _objectsPrivate = [NSMutableArray array];
+        for (int i = 0; i <= [self indexOfPosition:(Position){self.size.rows - 1, self.size.columns - 1}]; i++) {
+            self.objectsPrivate[i] = [NSNull null];
+        }
+    }
     
     return _objectsPrivate;
 }
