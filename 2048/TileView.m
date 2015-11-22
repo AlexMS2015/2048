@@ -25,7 +25,6 @@
     _value = value;
     //[self setNeedsDisplay];
     
-    self.alpha = 1.0;
     self.backgroundColor = [self tileColours][[NSNumber numberWithInt:self.value]];
     if ([self.subviews count] == 0) {
         //UIImageView *background = [[UIImageView alloc] initWithFrame:self.bounds];
@@ -45,7 +44,7 @@
     }
 }
 
--(void)layoutSubviews
+/*-(void)layoutSubviews
 {
     [super layoutSubviews];
     self.alpha = 1.0;
@@ -66,7 +65,6 @@
         UILabel *cellValueLabel = [self.subviews lastObject];
         cellValueLabel.text = self.value == 0 ? @"" : [NSString stringWithFormat:@"%d", self.value];
     }
-}
-
+}*/
 
 @end
