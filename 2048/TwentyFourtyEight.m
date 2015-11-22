@@ -38,6 +38,10 @@
         
         [self newTile];
         [self newTile];
+        [self newTile];
+        [self newTile];
+        [self newTile];
+        [self newTile];
     }
     
     return self;
@@ -102,6 +106,8 @@
     
     // place tile value in the random blank spot
     [self.board setPosition:randomPos toObject:[NSNumber numberWithInt:tileValue]];
+    TwentyFourtyEightTileOffset *tileOffset = [self.offsetsForMostRecentMove objectAtPosition:randomPos];
+    tileOffset.newTileInserted = YES;
     
     // add the tile's value to the score
     self.score += tileValue;
@@ -160,7 +166,7 @@
                         offset.colOffset += colOffset;
                         
                         offset.visible = NO;
-                        self.score += summedVal;
+                        //self.score += summedVal;
                         
                         break; // prevents multiple merges (e.g. [4, 2, 2] becoming [8, 0, 0] instead of [4, 4, 0]
                     }

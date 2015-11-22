@@ -24,6 +24,7 @@
 		FAD737861BD39FBA00BC4D56 /* CodableObject.m in Sources */ = {isa = PBXBuildFile; fileRef = FAD737851BD39FBA00BC4D56 /* CodableObject.m */; settings = {ASSET_TAGS = (); }; };
 		FAD737891BD3A7DF00BC4D56 /* TwentyFourtyEightVC.m in Sources */ = {isa = PBXBuildFile; fileRef = FAD737881BD3A7DF00BC4D56 /* TwentyFourtyEightVC.m */; settings = {ASSET_TAGS = (); }; };
 		FAD7378F1BD3AA8500BC4D56 /* TwentyFourtyEight.m in Sources */ = {isa = PBXBuildFile; fileRef = FAD7378E1BD3AA8500BC4D56 /* TwentyFourtyEight.m */; settings = {ASSET_TAGS = (); }; };
+		FAEB98F41C0139BC00E88511 /* TFETile.m in Sources */ = {isa = PBXBuildFile; fileRef = FAEB98F31C0139BC00E88511 /* TFETile.m */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,6 +79,8 @@
 		FAD737881BD3A7DF00BC4D56 /* TwentyFourtyEightVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TwentyFourtyEightVC.m; sourceTree = "<group>"; };
 		FAD7378D1BD3AA8500BC4D56 /* TwentyFourtyEight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwentyFourtyEight.h; sourceTree = "<group>"; };
 		FAD7378E1BD3AA8500BC4D56 /* TwentyFourtyEight.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TwentyFourtyEight.m; sourceTree = "<group>"; };
+		FAEB98F21C0139BC00E88511 /* TFETile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFETile.h; sourceTree = "<group>"; };
+		FAEB98F31C0139BC00E88511 /* TFETile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TFETile.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -211,6 +214,8 @@
 				FAD7377B1BD39FA000BC4D56 /* GridOfObjects.m */,
 				FAD7378D1BD3AA8500BC4D56 /* TwentyFourtyEight.h */,
 				FAD7378E1BD3AA8500BC4D56 /* TwentyFourtyEight.m */,
+				FAEB98F21C0139BC00E88511 /* TFETile.h */,
+				FAEB98F31C0139BC00E88511 /* TFETile.m */,
 				FA239F6F1BFB292C00DB3FF9 /* TwentyFourtyEightTileOffset.h */,
 				FA239F701BFB292C00DB3FF9 /* TwentyFourtyEightTileOffset.m */,
 			);
@@ -352,6 +357,7 @@
 				FA239F711BFB292C00DB3FF9 /* TwentyFourtyEightTileOffset.m in Sources */,
 				FAD737861BD39FBA00BC4D56 /* CodableObject.m in Sources */,
 				FAD7378F1BD3AA8500BC4D56 /* TwentyFourtyEight.m in Sources */,
+				FAEB98F41C0139BC00E88511 /* TFETile.m in Sources */,
 				FAD737891BD3A7DF00BC4D56 /* TwentyFourtyEightVC.m in Sources */,
 				FAD7377D1BD39FA000BC4D56 /* GridOfObjects.m in Sources */,
 				FA239F6B1BF69B4900DB3FF9 /* NSArray+Reverse.m in Sources */,

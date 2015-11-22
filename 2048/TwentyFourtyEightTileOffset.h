@@ -12,6 +12,8 @@
 
 @property (nonatomic) int rowOffset;
 @property (nonatomic) int colOffset;
+@property (nonatomic) BOOL newTileInserted;
+
 @property (nonatomic) BOOL visible;
 @property (nonatomic) BOOL merged;
 

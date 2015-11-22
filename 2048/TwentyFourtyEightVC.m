@@ -88,11 +88,11 @@
             cellValueLabel.textAlignment = NSTextAlignmentCenter;
             cellValueLabel.font = [UIFont systemFontOfSize:28];
             cellValueLabel.text = [valueAtCurrPos isEqualToNumber:@0] ? @"" : [valueAtCurrPos stringValue];
-            //cellValueLabel.layer.borderColor = [UIColor blackColor].CGColor;
-            //cellValueLabel.layer.borderWidth = 1;
+            cellValueLabel.layer.borderColor = [UIColor blackColor].CGColor;
+            cellValueLabel.layer.borderWidth = 1.0;
             [cell.contentView addSubview:cellValueLabel];
         } else {
-            UILabel *cellValueLabel = [[cell.contentView subviews] firstObject];
+            /*UILabel *cellValueLabel = [[cell.contentView subviews] firstObject];
             
             TwentyFourtyEightTileOffset *offsetForCurrPos = [self.game.offsetsForMostRecentMove objectAtPosition:position];
             if (offsetForCurrPos.rowOffset != 0 || offsetForCurrPos.colOffset != 0) {
@@ -122,13 +122,12 @@
                 NSNumber *valueAtCurrPos = [self.game.board objectAtPosition:position];
                 cell.contentView.backgroundColor = self.tileColours[valueAtCurrPos];
                 cellValueLabel.text = [valueAtCurrPos isEqualToNumber:@0] ? @"" : [valueAtCurrPos stringValue];
-            }
-
-   
+            }*/
             
-
-            
-          
+            UILabel *cellValueLabel = [[cell.contentView subviews] firstObject];
+            NSNumber *valueAtCurrPos = [self.game.board objectAtPosition:position];
+            cell.contentView.backgroundColor = self.tileColours[valueAtCurrPos];
+            cellValueLabel.text = [valueAtCurrPos isEqualToNumber:@0] ? @"" : [valueAtCurrPos stringValue];
         }
     } andCellTapHandler:NULL];
     
@@ -142,19 +141,53 @@
 {
     if ([keyPath isEqualToString:@"score"]) {
         self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
-        [self.boardView reloadData];
+        //[self.boardView reloadData];
         
-        /*for (int row = 0; row < self.game.board.size.rows; row++) {
+        for (int row = 0; row < self.game.board.size.rows; row++) {
             for (int col = 0; col < self.game.board.size.columns; col++) {
-                Position currPos = (Position){row, col};
-                TwentyFourtyEightTileOffset *offsetForCurrPos = [self.game.offsetsForMostRecentMove objectAtPosition:currPos];
+                Position position = (Position){row, col};
+                
+                TwentyFourtyEightTileOffset *offsetForCurrPos = [self.game.offsetsForMostRecentMove objectAtPosition:position];
                 if (offsetForCurrPos.rowOffset != 0 || offsetForCurrPos.colOffset != 0) {
-                    NSIndexPath *oldPosPath = [NSIndexPath indexPathForItem:[self.boardCVC.grid indexOfPosition:currPos] inSection:0];
+                    
+                    int currIndex = [self.boardCVC.grid indexOfPosition:position];
+                    NSIndexPath *currIndexPath = [NSIndexPath indexPathForItem:currIndex inSection:0];
+                    UICollectionViewCell *cell = [self.boardView cellForItemAtIndexPath:currIndexPath];
+                    UILabel *cellValueLabel = [[cell.contentView subviews] firstObject];
+                    [self.boardView reloadItemsAtIndexPaths:@[currIndexPath]];
 
-                    [self.boardView reloadItemsAtIndexPaths:@[oldPosPath]];
+                    UILabel *dummyLabel = [[UILabel alloc] initWithFrame:cell.frame];
+                    dummyLabel.backgroundColor = cell.contentView.backgroundColor;
+                    dummyLabel.textAlignment = NSTextAlignmentCenter;
+                    dummyLabel.font = [UIFont systemFontOfSize:28];
+                    dummyLabel.text = cellValueLabel.text;
+                    [self.boardContainerView addSubview:dummyLabel];
+                    
+                    Position newPos = (Position){position.row + offsetForCurrPos.rowOffset, position.column + offsetForCurrPos.colOffset};
+                    int index = [self.boardCVC.grid indexOfPosition:newPos];
+                    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:index inSection:0];
+                    CGRect frame = [self.boardView cellForItemAtIndexPath:indexPath].frame;
+                    
+                    [UIView animateWithDuration:0.5
+                                     animations:^{
+                                         dummyLabel.frame = frame;
+                                     }
+                                     completion:^(BOOL finished) {
+                                         
+                                         [UIView animateWithDuration:0 animations:^{
+                                             [self.boardView reloadItemsAtIndexPaths:@[indexPath]];
+                                         } completion:^(BOOL finished) {
+                                             [dummyLabel removeFromSuperview];
+                                         }];
+                                     }];
+                } else if (offsetForCurrPos.newTileInserted) {
+                    int currIndex = [self.boardCVC.grid indexOfPosition:position];
+                    NSIndexPath *currIndexPath = [NSIndexPath indexPathForItem:currIndex inSection:0];
+                    //UICollectionViewCell *cell = [self.boardView cellForItemAtIndexPath:currIndexPath];
+                    [self.boardView reloadItemsAtIndexPaths:@[currIndexPath]];
                 }
             }
-        }*/
+        }
     }
 }
 
