@@ -11,8 +11,10 @@
 @interface TFETile : NSObject
 
 @property (nonatomic) int value;
+@property (nonatomic) int lastValue;
 @property (nonatomic) int lastMoveRowOffset;
 @property (nonatomic) int lastMoveColOffset;
+@property (nonatomic) BOOL lastMoveMerged;
 @property (nonatomic) BOOL lastMoveNewTile;
 
 @end

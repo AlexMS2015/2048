@@ -19,7 +19,7 @@
 @property (nonatomic, readonly) BOOL gameInPlay;
 @property (nonatomic, readonly) int score;
 @property (nonatomic, strong, readonly) GridOfObjects *board; // tile values are stored as NSNumber objects
-@property (nonatomic, strong, readonly) GridOfObjects *offsetsForMostRecentMove; // contains 'TwentyFourtyEightTileOffset' objects.
+//@property (nonatomic, strong, readonly) GridOfObjects *offsetsForMostRecentMove; // contains 'TwentyFourtyEightTileOffset' objects.
 
 -(instancetype)initWithGameOfSize:(GridSize)size;
 -(void)swipeInDirection:(NSString *)direction;

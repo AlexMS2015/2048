@@ -10,4 +10,21 @@
 
 @implementation TFETile
 
+-(instancetype)init
+{
+    if (self = [super init]) {
+        self.lastMoveRowOffset = 0;
+        self.lastMoveColOffset = 0;
+        self.lastMoveMerged = NO;
+        self.lastMoveNewTile = NO;
+    }
+    
+    return self;
+}
+
+-(NSString *)description
+{
+    return [NSString stringWithFormat:@"Val %d, RowO %d, ColO %d, Mrg %d", self.value, self.lastMoveRowOffset, self.lastMoveColOffset, self.lastMoveMerged];
+}
+
 @end

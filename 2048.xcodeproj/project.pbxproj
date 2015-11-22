@@ -25,6 +25,7 @@
 		FAD737891BD3A7DF00BC4D56 /* TwentyFourtyEightVC.m in Sources */ = {isa = PBXBuildFile; fileRef = FAD737881BD3A7DF00BC4D56 /* TwentyFourtyEightVC.m */; settings = {ASSET_TAGS = (); }; };
 		FAD7378F1BD3AA8500BC4D56 /* TwentyFourtyEight.m in Sources */ = {isa = PBXBuildFile; fileRef = FAD7378E1BD3AA8500BC4D56 /* TwentyFourtyEight.m */; settings = {ASSET_TAGS = (); }; };
 		FAEB98F41C0139BC00E88511 /* TFETile.m in Sources */ = {isa = PBXBuildFile; fileRef = FAEB98F31C0139BC00E88511 /* TFETile.m */; settings = {ASSET_TAGS = (); }; };
+		FAEB98F71C01D68400E88511 /* TileView.m in Sources */ = {isa = PBXBuildFile; fileRef = FAEB98F61C01D68400E88511 /* TileView.m */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,6 +82,8 @@
 		FAD7378E1BD3AA8500BC4D56 /* TwentyFourtyEight.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TwentyFourtyEight.m; sourceTree = "<group>"; };
 		FAEB98F21C0139BC00E88511 /* TFETile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFETile.h; sourceTree = "<group>"; };
 		FAEB98F31C0139BC00E88511 /* TFETile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TFETile.m; sourceTree = "<group>"; };
+		FAEB98F51C01D68400E88511 /* TileView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TileView.h; sourceTree = "<group>"; };
+		FAEB98F61C01D68400E88511 /* TileView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TileView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -197,6 +200,8 @@
 			isa = PBXGroup;
 			children = (
 				FAD737481BD3956C00BC4D56 /* Main.storyboard */,
+				FAEB98F51C01D68400E88511 /* TileView.h */,
+				FAEB98F61C01D68400E88511 /* TileView.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -352,6 +357,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FAEB98F71C01D68400E88511 /* TileView.m in Sources */,
 				FAD7377C1BD39FA000BC4D56 /* Grid.m in Sources */,
 				FAD737771BD39F8800BC4D56 /* PositionStruct.m in Sources */,
 				FA239F711BFB292C00DB3FF9 /* TwentyFourtyEightTileOffset.m in Sources */,
