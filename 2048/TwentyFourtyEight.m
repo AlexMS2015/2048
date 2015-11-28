@@ -55,17 +55,17 @@
     
     if ([direction isEqualToString:@"LEFT"] || [direction isEqualToString:@"RIGHT"]) {
         for (int row = 0; row < self.board.size.rows; row++) {
-            tilesToMerge = [self.board objectsInRow:row reversed:NO];
+            tilesToMerge = [self.board objectsInRow:row];
             
             mergedTiles = [self mergeLine:tilesToMerge inDirection:direction];
-            [self.board replaceObjectsInRow:row withObjects:mergedTiles reversed:NO];
+            [self.board replaceObjectsInRow:row withObjects:mergedTiles];
         }
     } else if ([direction isEqualToString:@"UP"] || [direction isEqualToString:@"DOWN"]) {
         for (int col = 0; col < self.board.size.columns; col++) {
-            tilesToMerge = [self.board objectsInColumn:col reversed:NO];
+            tilesToMerge = [self.board objectsInColumn:col];
             
             mergedTiles = [self mergeLine:tilesToMerge inDirection:direction];
-            [self.board replaceObjectsInColumn:col withObjects:mergedTiles reversed:NO];
+            [self.board replaceObjectsInColumn:col withObjects:mergedTiles];
         }
     }
     
@@ -129,7 +129,7 @@
 #warning - The tile should have a 'reset' method
     for (int tileIdx = 0; tileIdx < [mergedLine count]; tileIdx++) {
         TFETile *originalTile = mergedLine[tileIdx];
-        originalTile.lastValue = originalTile.value;
+        originalTile.previousValue = originalTile.value;
         originalTile.lastMoveRowOffset = 0;
         originalTile.lastMoveColOffset = 0;
         originalTile.lastMoveMerged = NO;

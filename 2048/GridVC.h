@@ -29,4 +29,7 @@
           andCellConfigureBlock:(void (^)(UICollectionViewCell *cell, Position position, int index))cellConfigureBlock
               andCellTapHandler:(void (^)(UICollectionViewCell *cell, Position position, int index))cellTapHandler;
 
+-(NSIndexPath *)indexPathForPosition:(Position)position;
+-(UICollectionViewCell *)cellAtPosition:(Position)position;
+
 @end

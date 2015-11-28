@@ -26,10 +26,11 @@
 -(void)setPosition:(Position)position toObject:(id)object;
 -(void)swapObjectAtPosition:(Position)position1 withObjectAtPosition:(Position)position2;
 
-// new methods
--(NSArray *)objectsInRow:(int)row reversed:(BOOL)reversed;
--(NSArray *)objectsInColumn:(int)column reversed:(BOOL)reversed;
--(void)replaceObjectsInRow:(int)row withObjects:(NSArray *)objects reversed:(BOOL)reversed;
--(void)replaceObjectsInColumn:(int)col withObjects:(NSArray *)objects reversed:(BOOL)reversed;
+-(NSArray *)objectsInRow:(int)row;
+-(NSArray *)objectsInColumn:(int)column;
+-(void)replaceObjectsInRow:(int)row withObjects:(NSArray *)objects;
+-(void)replaceObjectsInColumn:(int)col withObjects:(NSArray *)objects;
+
+-(void)enumerateWithBlock:(void (^)(Position position, int index, id obj))block;
 
 @end

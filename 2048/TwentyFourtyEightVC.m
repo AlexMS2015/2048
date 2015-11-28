@@ -104,31 +104,63 @@
     if ([keyPath isEqualToString:@"score"]) {
         self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
         
-        for (int row = 0; row < self.game.board.size.rows; row++) {
+        [self.game.board enumerateWithBlock:^(Position position, int index, id obj) {
+
+            TFETile *currentTile = (TFETile *)obj;
+            UICollectionViewCell *currCell = [self.boardCVC cellAtPosition:position];
+            NSIndexPath *currIndexPath = [self.boardCVC indexPathForPosition:position];
+        
+            if (currentTile.lastMoveRowOffset != 0 || currentTile.lastMoveColOffset != 0) {
+                [self.boardView reloadItemsAtIndexPaths:@[currIndexPath]];
+                
+                Position newPos = (Position){position.row + currentTile.lastMoveRowOffset, position.column + currentTile.lastMoveColOffset};
+                UICollectionViewCell *newCell = [self.boardCVC cellAtPosition:newPos];
+                NSIndexPath *newIndexPath = [self.boardCVC indexPathForPosition:newPos];
+                
+                TileView *dummyTileView = [[TileView alloc] initWithFrame:currCell.frame];
+                dummyTileView.value = currentTile.previousValue;
+                [self.boardContainerView addSubview:dummyTileView];
+
+                [UIView animateWithDuration:0.50
+                                 animations:^{
+                                     dummyTileView.frame = newCell.frame;
+                                 }
+                                 completion:^(BOOL finished) {
+                                     [self.boardView reloadItemsAtIndexPaths:@[newIndexPath]];
+                                     [dummyTileView removeFromSuperview];
+                                 }];
+            } else if (currentTile.lastMoveNewTile) {
+                [self.boardView reloadItemsAtIndexPaths:@[currIndexPath]];
+            }
+         
+         
+         }];
+        
+        /*for (int row = 0; row < self.game.board.size.rows; row++) {
             for (int col = 0; col < self.game.board.size.columns; col++) {
                 
                 Position position = (Position){row, col};
                 TFETile *currentTile = [self.game.board objectAtPosition:position];
                 
-                if (currentTile.lastMoveRowOffset != 0 || currentTile.lastMoveColOffset != 0) {
+                if (currentTile.lastMoveRowOffset != 0 || currentTile.lastMoveColOffset != 0) { // check if the tile in the current position moved in the last turn
                     
                     int currIndex = [self.boardCVC.grid indexOfPosition:position];
                     NSIndexPath *currIndexPath = [NSIndexPath indexPathForItem:currIndex inSection:0];
                     UICollectionViewCell *cell = [self.boardView cellForItemAtIndexPath:currIndexPath];
                     
-                    /*UILabel *dummyLabel2 = [[UILabel alloc] initWithFrame:cell.frame];
-                    if (!currentTile.lastMoveNewTile) {
-                        [self.boardView reloadItemsAtIndexPaths:@[currIndexPath]];
-                    } else {
-                        dummyLabel2.backgroundColor = [UIColor whiteColor];
-                        dummyLabel2.textAlignment = NSTextAlignmentCenter;
-                        [self.boardContainerView addSubview:dummyLabel2];
-                    }*/
+                    //UILabel *dummyLabel2 = [[UILabel alloc] initWithFrame:cell.frame];
+                    //if (!currentTile.lastMoveNewTile) {
+                    //    [self.boardView reloadItemsAtIndexPaths:@[currIndexPath]];
+                    //} else {
+                    //    dummyLabel2.backgroundColor = [UIColor whiteColor];
+                    //    dummyLabel2.textAlignment = NSTextAlignmentCenter;
+                    //    [self.boardContainerView addSubview:dummyLabel2];
+                    //}
                     
 #warning - THIS IS THE PROBLEM WITH NEW CELLS... THEY APPEAR STRAIGHT AWAY... NEED A CONDITIONAL IN HERE
                     [self.boardView reloadItemsAtIndexPaths:@[currIndexPath]];
                     TileView *dummyTileView = [[TileView alloc] initWithFrame:cell.frame];
-                    dummyTileView.value = currentTile.lastValue;
+                    dummyTileView.value = currentTile.previousValue;
                     [self.boardContainerView addSubview:dummyTileView];
                     
                     Position newPos = (Position){position.row + currentTile.lastMoveRowOffset, position.column + currentTile.lastMoveColOffset};
@@ -146,26 +178,26 @@
                                             [self.boardView reloadItemsAtIndexPaths:@[indexPath]];
                                          } completion:^(BOOL finished) {
                                              [dummyTileView removeFromSuperview];
-                                             /*if (currentTile.lastMoveNewTile) {
-                                                 [self.boardView reloadItemsAtIndexPaths:@[currIndexPath]];
+                                             //if (currentTile.lastMoveNewTile) {
+                                             //    [self.boardView reloadItemsAtIndexPaths:@[currIndexPath]];
                                                  //[dummyLabel2 removeFromSuperview];
-                                             }*/
+                                             //}
                                          }];
                                      }];
                 } else if (currentTile.lastMoveNewTile) {
                     int currIndex = [self.boardCVC.grid indexOfPosition:position];
                     NSIndexPath *currIndexPath = [NSIndexPath indexPathForItem:currIndex inSection:0];
                     [self.boardView reloadItemsAtIndexPaths:@[currIndexPath]];
-                    /*[UIView animateWithDuration:1.0
-                                     animations:^{
-                                         NSLog(@"animating");
-                                     } completion:^(BOOL finished) {
-                                         [self.boardView reloadItemsAtIndexPaths:@[currIndexPath]];
-                                         NSLog(@"done");
-                                     }];*/
+                    //[UIView animateWithDuration:1.0
+                     //                animations:^{
+                      //                   NSLog(@"animating");
+                      //               } completion:^(BOOL finished) {
+                       //                  [self.boardView reloadItemsAtIndexPaths:@[currIndexPath]];
+                         //                NSLog(@"done");
+                           //          }];
                 }
             }
-        }
+        }*/
     }
 }
 

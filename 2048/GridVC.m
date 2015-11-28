@@ -19,6 +19,18 @@
 
 @implementation GridVC
 
+-(NSIndexPath *)indexPathForPosition:(Position)position
+{
+    int index = [self.grid indexOfPosition:position];
+    return [NSIndexPath indexPathForItem:index inSection:0];
+}
+
+-(UICollectionViewCell *)cellAtPosition:(Position)position
+{
+    NSIndexPath *path = [self indexPathForPosition:position];
+    return [self.collectionView cellForItemAtIndexPath:path];
+}
+
 #define CELL_IDENTIFIER @"CollectionCell"
 
 #pragma mark - Properties

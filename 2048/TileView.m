@@ -10,6 +10,8 @@
 
 @implementation TileView
 
+#warning - THE APETH WEBSITE WILL HELP EXPLAIN HOW THIS ALL WORKS
+
 -(NSDictionary *)tileColours
 {
     return @{@0 : [UIColor whiteColor],
