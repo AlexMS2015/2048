@@ -107,11 +107,15 @@
         [self.game.board enumerateWithBlock:^(Position position, int index, id obj) {
 
             TFETile *currentTile = (TFETile *)obj;
-            UICollectionViewCell *currCell = [self.boardCVC cellAtPosition:position];
             NSIndexPath *currIndexPath = [self.boardCVC indexPathForPosition:position];
+            UICollectionViewCell *currCell = [self.boardCVC cellAtPosition:position];
         
             if (currentTile.lastMoveRowOffset != 0 || currentTile.lastMoveColOffset != 0) {
+                // make the current tile go blank (if it's a new tile it will show itself after the animation)
+                int currTileValue = currentTile.value;
+                currentTile.value = 0;
                 [self.boardView reloadItemsAtIndexPaths:@[currIndexPath]];
+                currentTile.value = currTileValue;
                 
                 Position newPos = (Position){position.row + currentTile.lastMoveRowOffset, position.column + currentTile.lastMoveColOffset};
                 UICollectionViewCell *newCell = [self.boardCVC cellAtPosition:newPos];
@@ -126,14 +130,39 @@
                                      dummyTileView.frame = newCell.frame;
                                  }
                                  completion:^(BOOL finished) {
-                                     [self.boardView reloadItemsAtIndexPaths:@[newIndexPath]];
                                      [dummyTileView removeFromSuperview];
-                                 }];
-            } else if (currentTile.lastMoveNewTile) {
-                [self.boardView reloadItemsAtIndexPaths:@[currIndexPath]];
+                                     [self.boardView reloadItemsAtIndexPaths:@[newIndexPath]];
+                }];
             }
-         
-         
+            
+            if (currentTile.lastMoveNewTile) {
+                TileView *dummyTileView = [[TileView alloc] initWithFrame:currCell.frame];
+                dummyTileView.value = currentTile.value;
+                dummyTileView.alpha = 0.0;
+                [self.boardContainerView addSubview:dummyTileView];
+                
+                [UIView animateWithDuration:0.5 delay:0.5 options:UIViewAnimationOptionCurveEaseIn animations:^{
+                    dummyTileView.alpha = 1.0;
+                } completion:^(BOOL finished) {
+                    [self.boardView reloadItemsAtIndexPaths:@[currIndexPath]];
+                    [dummyTileView removeFromSuperview];
+                    /*[UIView animateWithDuration:0 animations:^{
+                        dummyTileView.hidden = YES;
+                    } completion:^(BOOL finished) {
+                        [self.boardView reloadItemsAtIndexPaths:@[currIndexPath]];
+                        [dummyTileView removeFromSuperview];
+                    }];*/
+                    
+                }];
+                /*[UIView animateWithDuration:2.0
+                                 animations:^{
+                                     dummyTileView.alpha = 1.0;
+                                 }
+                                 completion:^(BOOL finished) {
+                                     [dummyTileView removeFromSuperview];
+                                     [self.boardView reloadItemsAtIndexPaths:@[currIndexPath]];
+                                 }];*/
+            }
          }];
         
         /*for (int row = 0; row < self.game.board.size.rows; row++) {
