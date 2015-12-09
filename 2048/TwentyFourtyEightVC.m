@@ -10,14 +10,13 @@
 #import "TwentyFourtyEight.h"
 #import "NoScrollGridVC.h"
 #import "TFETile.h"
-#import "TileView.h"
+#import "UILabel+GameTile.h"
 
 @interface TwentyFourtyEightVC () <GridVCDelegate>
 
 @property (strong, nonatomic) NoScrollGridVC *boardCVC;
 
 @property (strong, nonatomic) TwentyFourtyEight *game;
-@property (strong, nonatomic) NSDictionary *tileColours;
 
 // outlets
 @property (weak, nonatomic) IBOutlet UICollectionView *boardView;
@@ -28,11 +27,32 @@
 
 @implementation TwentyFourtyEightVC
 
+-(NSDictionary *)tileColours
+{
+    return @{@0 : [UIColor whiteColor],
+             @2 : [UIColor yellowColor],
+             @4 : [UIColor purpleColor],
+             @8 : [UIColor redColor],
+             @16 : [UIColor blueColor],
+             @32 : [UIColor orangeColor],
+             @64 : [UIColor greenColor],
+             @128 : [UIColor cyanColor],
+             @256 : [UIColor magentaColor],
+             @512 : [UIColor brownColor],
+             @1024 : [UIColor grayColor]};
+}
+
 -(void)newGameWithRows:(int)rows andColumns:(int)cols
 {
     [self.game removeObserver:self forKeyPath:@"score"];
     for (id obj in self.boardView.subviews) {
-        [obj removeFromSuperview];
+        if ([obj isKindOfClass:[UICollectionViewCell class]]) {
+            UICollectionViewCell *cell = (UICollectionViewCell *)obj;
+            for (UIView *subview in cell.contentView.subviews) {
+                [subview removeFromSuperview];
+                NSLog(@"removing");
+            }
+        }
     }
     self.game = [[TwentyFourtyEight alloc] initWithGameOfSize:(GridSize){rows, cols}];
 }
@@ -61,16 +81,6 @@
 
 #pragma mark - Properties
 
--(NSDictionary *)tileColours
-{
-    return @{@0 : [UIColor whiteColor],
-             @2 : [UIColor grayColor],
-             @4 : [UIColor greenColor],
-             @8 : [UIColor redColor],
-             @16 : [UIColor blueColor],
-             @32 : [UIColor orangeColor]};
-}
-
 -(void)setBoardCVC:(NoScrollGridVC *)boardCVC
 {
     _boardCVC = boardCVC;
@@ -82,15 +92,20 @@
     _game = game;
     
     self.boardCVC = [[NoScrollGridVC alloc] initWithgridSize:self.game.board.size collectionView:self.boardView andCellConfigureBlock:^(UICollectionViewCell *cell, Position position, int index) {
+        
         TFETile *currentTile = [self.game.board objectAtPosition:position];
+        UILabel *tileLabel;
+        
         if ([cell.contentView.subviews count] == 0) {
-            TileView *tileView = [[TileView alloc] initWithFrame:cell.contentView.bounds];
-            tileView.value = currentTile.value;
-            [cell.contentView addSubview:tileView];
+            tileLabel = [UILabel newGameTileWithFrame:cell.contentView.bounds];
+            [cell.contentView addSubview:tileLabel];
         } else {
-            TileView *cellTileView = [[cell.contentView subviews] firstObject];
-            cellTileView.value = currentTile.value;
+            tileLabel = [[cell.contentView subviews] firstObject];
         }
+        
+        tileLabel.text = currentTile.value == 0 ? @"" : [NSString stringWithFormat:@"%d", currentTile.value];
+        tileLabel.backgroundColor = [self tileColours][[NSNumber numberWithInt:currentTile.value]];
+    
     } andCellTapHandler:NULL];
     
     [self.game addObserver:self forKeyPath:@"score" options:NSKeyValueObservingOptionNew context:nil];
@@ -111,7 +126,7 @@
             UICollectionViewCell *currCell = [self.boardCVC cellAtPosition:position];
         
             if (currentTile.lastMoveRowOffset != 0 || currentTile.lastMoveColOffset != 0) {
-                // make the current tile go blank (if it's a new tile it will show itself after the animation)
+                // make the current tile go blank (if it's a newly generated tile with a non zero value then it will show itself after the animation)
                 int currTileValue = currentTile.value;
                 currentTile.value = 0;
                 [self.boardView reloadItemsAtIndexPaths:@[currIndexPath]];
@@ -121,112 +136,43 @@
                 UICollectionViewCell *newCell = [self.boardCVC cellAtPosition:newPos];
                 NSIndexPath *newIndexPath = [self.boardCVC indexPathForPosition:newPos];
                 
-                TileView *dummyTileView = [[TileView alloc] initWithFrame:currCell.frame];
-                dummyTileView.value = currentTile.previousValue;
-                [self.boardContainerView addSubview:dummyTileView];
-
+                UILabel *dummyTileLabel = [UILabel newGameTileWithFrame:currCell.frame];
+                dummyTileLabel.text = [NSString stringWithFormat:@"%d", currentTile.previousValue];
+                dummyTileLabel.backgroundColor = [self tileColours][[NSNumber numberWithInt:currentTile.previousValue]];
+                [self.boardContainerView addSubview:dummyTileLabel];
+                
                 [UIView animateWithDuration:0.50
                                  animations:^{
-                                     dummyTileView.frame = newCell.frame;
+                                     dummyTileLabel.frame = newCell.frame;
+                                     //dummyTileLabel.alpha = 0.2;
                                  }
                                  completion:^(BOOL finished) {
-                                     [dummyTileView removeFromSuperview];
-                                     [self.boardView reloadItemsAtIndexPaths:@[newIndexPath]];
+                                     [UIView performWithoutAnimation:^{
+                                        [dummyTileLabel removeFromSuperview];
+                                         [self.boardView reloadItemsAtIndexPaths:@[newIndexPath]];
+                                     }];
+                                     
                 }];
             }
             
-            if (currentTile.lastMoveNewTile) {
-                TileView *dummyTileView = [[TileView alloc] initWithFrame:currCell.frame];
-                dummyTileView.value = currentTile.value;
-                dummyTileView.alpha = 0.0;
-                [self.boardContainerView addSubview:dummyTileView];
+            if (currentTile.lastMoveNewTile) { // did a newly generated tile appear in the current position during the last turn? if yes then animate this change
                 
+                UILabel *dummyTileLabel = [UILabel newGameTileWithFrame:currCell.frame];
+                dummyTileLabel.text = [NSString stringWithFormat:@"%d", currentTile.value];
+                dummyTileLabel.backgroundColor = [self tileColours][[NSNumber numberWithInt:currentTile.value]];
+                dummyTileLabel.alpha = 0.0;
+                [self.boardContainerView addSubview:dummyTileLabel];
+        
                 [UIView animateWithDuration:0.5 delay:0.5 options:UIViewAnimationOptionCurveEaseIn animations:^{
-                    dummyTileView.alpha = 1.0;
+                    dummyTileLabel.alpha = 1.0;
                 } completion:^(BOOL finished) {
-                    [self.boardView reloadItemsAtIndexPaths:@[currIndexPath]];
-                    [dummyTileView removeFromSuperview];
-                    /*[UIView animateWithDuration:0 animations:^{
-                        dummyTileView.hidden = YES;
-                    } completion:^(BOOL finished) {
+                    [UIView performWithoutAnimation:^{
                         [self.boardView reloadItemsAtIndexPaths:@[currIndexPath]];
-                        [dummyTileView removeFromSuperview];
-                    }];*/
-                    
+                        [dummyTileLabel removeFromSuperview];
+                    }];
                 }];
-                /*[UIView animateWithDuration:2.0
-                                 animations:^{
-                                     dummyTileView.alpha = 1.0;
-                                 }
-                                 completion:^(BOOL finished) {
-                                     [dummyTileView removeFromSuperview];
-                                     [self.boardView reloadItemsAtIndexPaths:@[currIndexPath]];
-                                 }];*/
             }
          }];
-        
-        /*for (int row = 0; row < self.game.board.size.rows; row++) {
-            for (int col = 0; col < self.game.board.size.columns; col++) {
-                
-                Position position = (Position){row, col};
-                TFETile *currentTile = [self.game.board objectAtPosition:position];
-                
-                if (currentTile.lastMoveRowOffset != 0 || currentTile.lastMoveColOffset != 0) { // check if the tile in the current position moved in the last turn
-                    
-                    int currIndex = [self.boardCVC.grid indexOfPosition:position];
-                    NSIndexPath *currIndexPath = [NSIndexPath indexPathForItem:currIndex inSection:0];
-                    UICollectionViewCell *cell = [self.boardView cellForItemAtIndexPath:currIndexPath];
-                    
-                    //UILabel *dummyLabel2 = [[UILabel alloc] initWithFrame:cell.frame];
-                    //if (!currentTile.lastMoveNewTile) {
-                    //    [self.boardView reloadItemsAtIndexPaths:@[currIndexPath]];
-                    //} else {
-                    //    dummyLabel2.backgroundColor = [UIColor whiteColor];
-                    //    dummyLabel2.textAlignment = NSTextAlignmentCenter;
-                    //    [self.boardContainerView addSubview:dummyLabel2];
-                    //}
-                    
-#warning - THIS IS THE PROBLEM WITH NEW CELLS... THEY APPEAR STRAIGHT AWAY... NEED A CONDITIONAL IN HERE
-                    [self.boardView reloadItemsAtIndexPaths:@[currIndexPath]];
-                    TileView *dummyTileView = [[TileView alloc] initWithFrame:cell.frame];
-                    dummyTileView.value = currentTile.previousValue;
-                    [self.boardContainerView addSubview:dummyTileView];
-                    
-                    Position newPos = (Position){position.row + currentTile.lastMoveRowOffset, position.column + currentTile.lastMoveColOffset};
-                    int index = [self.boardCVC.grid indexOfPosition:newPos];
-                    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:index inSection:0];
-                    CGRect frame = [self.boardView cellForItemAtIndexPath:indexPath].frame;
-                    
-                    [UIView animateWithDuration:0.50
-                                     animations:^{
-                                         //dummyLabel.frame = frame;
-                                         dummyTileView.frame = frame;
-                                     }
-                                     completion:^(BOOL finished) {
-                                         [UIView animateWithDuration:0 animations:^{
-                                            [self.boardView reloadItemsAtIndexPaths:@[indexPath]];
-                                         } completion:^(BOOL finished) {
-                                             [dummyTileView removeFromSuperview];
-                                             //if (currentTile.lastMoveNewTile) {
-                                             //    [self.boardView reloadItemsAtIndexPaths:@[currIndexPath]];
-                                                 //[dummyLabel2 removeFromSuperview];
-                                             //}
-                                         }];
-                                     }];
-                } else if (currentTile.lastMoveNewTile) {
-                    int currIndex = [self.boardCVC.grid indexOfPosition:position];
-                    NSIndexPath *currIndexPath = [NSIndexPath indexPathForItem:currIndex inSection:0];
-                    [self.boardView reloadItemsAtIndexPaths:@[currIndexPath]];
-                    //[UIView animateWithDuration:1.0
-                     //                animations:^{
-                      //                   NSLog(@"animating");
-                      //               } completion:^(BOOL finished) {
-                       //                  [self.boardView reloadItemsAtIndexPaths:@[currIndexPath]];
-                         //                NSLog(@"done");
-                           //          }];
-                }
-            }
-        }*/
     }
 }
 

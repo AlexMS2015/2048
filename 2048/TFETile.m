@@ -24,7 +24,9 @@
 
 -(NSString *)description
 {
-    return [NSString stringWithFormat:@"Val %d, RowO %d, ColO %d, Mrg %d", self.value, self.lastMoveRowOffset, self.lastMoveColOffset, self.lastMoveMerged];
+    //return [NSString stringWithFormat:@"Val %d, Row %d, Col %d, Mrg %d", self.value, self.lastMoveRowOffset, self.lastMoveColOffset, self.lastMoveMerged];
+    return [NSString stringWithFormat:@"Val %d", self.value];
+
 }
 
 @end

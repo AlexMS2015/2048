@@ -7,7 +7,6 @@
 
 #import <Foundation/Foundation.h>
 #import "Grid.h"
-#import "NSArray+Reverse.h"
 
 @interface GridOfObjects : Grid
 

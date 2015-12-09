@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		FA239F6B1BF69B4900DB3FF9 /* NSArray+Reverse.m in Sources */ = {isa = PBXBuildFile; fileRef = FA239F6A1BF69B4900DB3FF9 /* NSArray+Reverse.m */; settings = {ASSET_TAGS = (); }; };
+		FAD65A691C13D4EF00FA21E7 /* UILabel+GameTile.m in Sources */ = {isa = PBXBuildFile; fileRef = FAD65A681C13D4EF00FA21E7 /* UILabel+GameTile.m */; settings = {ASSET_TAGS = (); }; };
 		FAD737411BD3956C00BC4D56 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FAD737401BD3956C00BC4D56 /* main.m */; };
 		FAD737441BD3956C00BC4D56 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FAD737431BD3956C00BC4D56 /* AppDelegate.m */; };
 		FAD7374A1BD3956C00BC4D56 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FAD737481BD3956C00BC4D56 /* Main.storyboard */; };
@@ -24,7 +25,6 @@
 		FAD737891BD3A7DF00BC4D56 /* TwentyFourtyEightVC.m in Sources */ = {isa = PBXBuildFile; fileRef = FAD737881BD3A7DF00BC4D56 /* TwentyFourtyEightVC.m */; settings = {ASSET_TAGS = (); }; };
 		FAD7378F1BD3AA8500BC4D56 /* TwentyFourtyEight.m in Sources */ = {isa = PBXBuildFile; fileRef = FAD7378E1BD3AA8500BC4D56 /* TwentyFourtyEight.m */; settings = {ASSET_TAGS = (); }; };
 		FAEB98F41C0139BC00E88511 /* TFETile.m in Sources */ = {isa = PBXBuildFile; fileRef = FAEB98F31C0139BC00E88511 /* TFETile.m */; settings = {ASSET_TAGS = (); }; };
-		FAEB98F71C01D68400E88511 /* TileView.m in Sources */ = {isa = PBXBuildFile; fileRef = FAEB98F61C01D68400E88511 /* TileView.m */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +47,8 @@
 /* Begin PBXFileReference section */
 		FA239F691BF69B4900DB3FF9 /* NSArray+Reverse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Reverse.h"; sourceTree = "<group>"; };
 		FA239F6A1BF69B4900DB3FF9 /* NSArray+Reverse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Reverse.m"; sourceTree = "<group>"; };
+		FAD65A671C13D4EF00FA21E7 /* UILabel+GameTile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+GameTile.h"; sourceTree = "<group>"; };
+		FAD65A681C13D4EF00FA21E7 /* UILabel+GameTile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+GameTile.m"; sourceTree = "<group>"; };
 		FAD7373C1BD3956C00BC4D56 /* 2048.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = 2048.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAD737401BD3956C00BC4D56 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		FAD737421BD3956C00BC4D56 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -79,8 +81,6 @@
 		FAD7378E1BD3AA8500BC4D56 /* TwentyFourtyEight.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TwentyFourtyEight.m; sourceTree = "<group>"; };
 		FAEB98F21C0139BC00E88511 /* TFETile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFETile.h; sourceTree = "<group>"; };
 		FAEB98F31C0139BC00E88511 /* TFETile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TFETile.m; sourceTree = "<group>"; };
-		FAEB98F51C01D68400E88511 /* TileView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TileView.h; sourceTree = "<group>"; };
-		FAEB98F61C01D68400E88511 /* TileView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TileView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,8 +113,45 @@
 			children = (
 				FA239F691BF69B4900DB3FF9 /* NSArray+Reverse.h */,
 				FA239F6A1BF69B4900DB3FF9 /* NSArray+Reverse.m */,
+				FAD65A671C13D4EF00FA21E7 /* UILabel+GameTile.h */,
+				FAD65A681C13D4EF00FA21E7 /* UILabel+GameTile.m */,
 			);
 			name = Categories;
+			sourceTree = "<group>";
+		};
+		FAD65A6C1C14035500FA21E7 /* Grid Framework */ = {
+			isa = PBXGroup;
+			children = (
+				FAD65A6E1C14038000FA21E7 /* Controller */,
+				FAD65A6D1C14036C00FA21E7 /* Model */,
+			);
+			name = "Grid Framework";
+			sourceTree = "<group>";
+		};
+		FAD65A6D1C14036C00FA21E7 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				FAD737841BD39FBA00BC4D56 /* CodableObject.h */,
+				FAD737851BD39FBA00BC4D56 /* CodableObject.m */,
+				FAD737751BD39F8800BC4D56 /* PositionStruct.h */,
+				FAD737761BD39F8800BC4D56 /* PositionStruct.m */,
+				FAD737781BD39FA000BC4D56 /* Grid.h */,
+				FAD737791BD39FA000BC4D56 /* Grid.m */,
+				FAD7377A1BD39FA000BC4D56 /* GridOfObjects.h */,
+				FAD7377B1BD39FA000BC4D56 /* GridOfObjects.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		FAD65A6E1C14038000FA21E7 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				FAD7377E1BD39FAE00BC4D56 /* GridVC.h */,
+				FAD7377F1BD39FAE00BC4D56 /* GridVC.m */,
+				FAD737801BD39FAE00BC4D56 /* NoScrollGridVC.h */,
+				FAD737811BD39FAE00BC4D56 /* NoScrollGridVC.m */,
+			);
+			name = Controller;
 			sourceTree = "<group>";
 		};
 		FAD737331BD3956C00BC4D56 = {
@@ -140,6 +177,7 @@
 		FAD7373E1BD3956C00BC4D56 /* 2048 */ = {
 			isa = PBXGroup;
 			children = (
+				FAD65A6C1C14035500FA21E7 /* Grid Framework */,
 				FA239F651BF69AF800DB3FF9 /* Categories */,
 				FAD737721BD3979B00BC4D56 /* Controller */,
 				FAD737731BD397A200BC4D56 /* View */,
@@ -185,10 +223,6 @@
 				FAD737431BD3956C00BC4D56 /* AppDelegate.m */,
 				FAD737871BD3A7DF00BC4D56 /* TwentyFourtyEightVC.h */,
 				FAD737881BD3A7DF00BC4D56 /* TwentyFourtyEightVC.m */,
-				FAD7377E1BD39FAE00BC4D56 /* GridVC.h */,
-				FAD7377F1BD39FAE00BC4D56 /* GridVC.m */,
-				FAD737801BD39FAE00BC4D56 /* NoScrollGridVC.h */,
-				FAD737811BD39FAE00BC4D56 /* NoScrollGridVC.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -197,8 +231,6 @@
 			isa = PBXGroup;
 			children = (
 				FAD737481BD3956C00BC4D56 /* Main.storyboard */,
-				FAEB98F51C01D68400E88511 /* TileView.h */,
-				FAEB98F61C01D68400E88511 /* TileView.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -206,14 +238,6 @@
 		FAD737741BD397AB00BC4D56 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				FAD737841BD39FBA00BC4D56 /* CodableObject.h */,
-				FAD737851BD39FBA00BC4D56 /* CodableObject.m */,
-				FAD737751BD39F8800BC4D56 /* PositionStruct.h */,
-				FAD737761BD39F8800BC4D56 /* PositionStruct.m */,
-				FAD737781BD39FA000BC4D56 /* Grid.h */,
-				FAD737791BD39FA000BC4D56 /* Grid.m */,
-				FAD7377A1BD39FA000BC4D56 /* GridOfObjects.h */,
-				FAD7377B1BD39FA000BC4D56 /* GridOfObjects.m */,
 				FAD7378D1BD3AA8500BC4D56 /* TwentyFourtyEight.h */,
 				FAD7378E1BD3AA8500BC4D56 /* TwentyFourtyEight.m */,
 				FAEB98F21C0139BC00E88511 /* TFETile.h */,
@@ -352,7 +376,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FAEB98F71C01D68400E88511 /* TileView.m in Sources */,
 				FAD7377C1BD39FA000BC4D56 /* Grid.m in Sources */,
 				FAD737771BD39F8800BC4D56 /* PositionStruct.m in Sources */,
 				FAD737861BD39FBA00BC4D56 /* CodableObject.m in Sources */,
@@ -362,6 +385,7 @@
 				FAD7377D1BD39FA000BC4D56 /* GridOfObjects.m in Sources */,
 				FA239F6B1BF69B4900DB3FF9 /* NSArray+Reverse.m in Sources */,
 				FAD737441BD3956C00BC4D56 /* AppDelegate.m in Sources */,
+				FAD65A691C13D4EF00FA21E7 /* UILabel+GameTile.m in Sources */,
 				FAD737411BD3956C00BC4D56 /* main.m in Sources */,
 				FAD737831BD39FAE00BC4D56 /* NoScrollGridVC.m in Sources */,
 				FAD737821BD39FAE00BC4D56 /* GridVC.m in Sources */,

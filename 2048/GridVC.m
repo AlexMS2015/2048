@@ -49,8 +49,8 @@
             self.cellHeight = self.collectionView.bounds.size.height / self.grid.size.rows;
         }
         
-        //NSLog(@"cell w = %f", _cellWidth);
-        //NSLog(@"height h = %f", self.cellHeight);
+        NSLog(@"cell w = %f", _cellWidth);
+        NSLog(@"height h = %f", self.cellHeight);
     }
     
     return _cellWidth;
@@ -119,12 +119,12 @@
 
 -(CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section
 {
-    return 0;
+    return 0.0;
 }
 
 -(CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section
 {
-    return 0;
+    return 0.0;
 }
 
 -(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
