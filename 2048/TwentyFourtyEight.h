@@ -9,10 +9,6 @@
 #import <Foundation/Foundation.h>
 #import "GridOfObjects.h"
 @import UIKit;
-
-/*typedef enum {
-    UP, DOWN, LEFT, RIGHT
-}SwipeDirection;*/
  
 @interface TwentyFourtyEight : NSObject
 
@@ -22,6 +18,5 @@
 
 -(instancetype)initWithGameOfSize:(GridSize)size;
 -(void)swipeInDirection:(NSString *)direction;
-//-(void)swipeInDirection:(SwipeDirection)direction;
 
 @end
