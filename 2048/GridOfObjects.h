@@ -1,35 +1,31 @@
 //
 //  GridOfObjects.h
+//  CollectionViewTest
 //
-//  Created by Alex Smith on 26/08/2015.
-//  Copyright (c) 2015 Alex Smith. All rights reserved.
+//  Created by Alex Smith on 22/02/2016.
+//  Copyright © 2016 Alex Smith. All rights reserved.
 //
+
+/*
+ 
+ [ [R0C0, R0C1, R0C2], [R1C0, R1C1, R1C2], [R2C0, R2C1, R2C2] ]
+ 
+ */
 
 #import <Foundation/Foundation.h>
-#import "Grid.h"
+#import "PositionStruct.h"
 
-@interface GridOfObjects : Grid
+@interface GridOfObjects : NSObject
 
-#warning - THERE NEEDS TO BE A CHECK TO STOP INSERTING AT POSITONS OUTSIDE THE GRID (too large)
+@property (strong, nonatomic) NSMutableArray <NSMutableArray *> *objects;
+@property (nonatomic) NSInteger numRows;
+@property (nonatomic) NSInteger numCols;
 
-#warning - WHY is this public?
-@property (nonatomic, strong) NSArray *objects;
+-(instancetype)initWithRows:(NSInteger)rows andColumns:(NSInteger)cols;
 
--(instancetype)initWithGridSize:(GridSize)size
-                 andOrientation:(Orientation)orientation
-                     andObjects:(NSArray *)objects; // will initiate with NSNull object in every position if the superclass's initialiser is used or no objects are provided to this method
-
--(id)objectAtPosition:(Position)position;
 -(Position)positionOfObject:(id)object;
-
--(void)setPosition:(Position)position toObject:(id)object;
 -(void)swapObjectAtPosition:(Position)position1 withObjectAtPosition:(Position)position2;
-
--(NSArray *)objectsInRow:(int)row;
--(NSArray *)objectsInColumn:(int)column;
--(void)replaceObjectsInRow:(int)row withObjects:(NSArray *)objects;
--(void)replaceObjectsInColumn:(int)col withObjects:(NSArray *)objects;
-
--(void)enumerateWithBlock:(void (^)(Position position, int index, id obj))block;
+-(void)enumerateWithBlock:(void (^)(Position position, id obj))block;
+-(Position)randomPositionAdjacentToPosition:(Position)position;
 
 @end

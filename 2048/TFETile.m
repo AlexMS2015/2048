@@ -24,9 +24,18 @@
 
 -(NSString *)description
 {
-    //return [NSString stringWithFormat:@"Val %d, Row %d, Col %d, Mrg %d", self.value, self.lastMoveRowOffset, self.lastMoveColOffset, self.lastMoveMerged];
-    return [NSString stringWithFormat:@"Val %d", self.value];
+    return [NSString stringWithFormat:@"Val %d, Row %d, Col %d, Mrg %d", self.value, self.lastMoveRowOffset, self.lastMoveColOffset, self.lastMoveMerged];
+    //return [NSString stringWithFormat:@"Val %d", self.value];
 
+}
+
+-(void)resetTileForNextMove
+{
+    self.previousValue = self.value;
+    self.lastMoveRowOffset = 0;
+    self.lastMoveColOffset = 0;
+    self.lastMoveMerged = NO;
+    self.lastMoveNewTile = NO;
 }
 
 @end

@@ -8,15 +8,19 @@
 
 #import "TwentyFourtyEightVC.h"
 #import "TwentyFourtyEight.h"
-#import "NoScrollGridVC.h"
 #import "TFETile.h"
 #import "UILabel+GameTile.h"
+#import "CollectionViewDataSource.h"
+#import "UICollectionViewFlowLayout+GridLayout.h"
+#import "ViewSwipeGestureHandler.h"
 
-@interface TwentyFourtyEightVC () <GridVCDelegate>
-
-@property (strong, nonatomic) NoScrollGridVC *boardCVC;
+@interface TwentyFourtyEightVC () <ViewSwipeGestureHandlerDelegate>
 
 @property (strong, nonatomic) TwentyFourtyEight *game;
+
+// external helper objects
+@property (strong, nonatomic) CollectionViewDataSource *boardDataSource;
+@property (strong, nonatomic) ViewSwipeGestureHandler *boardSwipeGestureHandler;
 
 // outlets
 @property (weak, nonatomic) IBOutlet UICollectionView *boardView;
@@ -45,21 +49,12 @@
 -(void)newGameWithRows:(int)rows andColumns:(int)cols
 {
     [self.game removeObserver:self forKeyPath:@"score"];
-    for (id obj in self.boardView.subviews) {
-        if ([obj isKindOfClass:[UICollectionViewCell class]]) {
-            UICollectionViewCell *cell = (UICollectionViewCell *)obj;
-            for (UIView *subview in cell.contentView.subviews) {
-                [subview removeFromSuperview];
-                NSLog(@"removing");
-            }
-        }
-    }
-    self.game = [[TwentyFourtyEight alloc] initWithGameOfSize:(GridSize){rows, cols}];
+    self.game = [[TwentyFourtyEight alloc] initWithRows:rows andColumns:cols];
 }
 
 #pragma mark - GridVCDelegate
 
--(void)swipedInDirection:(UISwipeGestureRecognizerDirection)direction
+-(void)view:(UIView *)view swipedInDirection:(UISwipeGestureRecognizerDirection)direction
 {
     switch (direction) {
         case UISwipeGestureRecognizerDirectionLeft:
@@ -81,32 +76,35 @@
 
 #pragma mark - Properties
 
--(void)setBoardCVC:(NoScrollGridVC *)boardCVC
+-(void)setBoardView:(UICollectionView *)boardView
 {
-    _boardCVC = boardCVC;
-    _boardCVC.delegate = self;
+    _boardView = boardView;
 }
 
 -(void)setGame:(TwentyFourtyEight *)game
 {
     _game = game;
     
-    self.boardCVC = [[NoScrollGridVC alloc] initWithgridSize:self.game.board.size collectionView:self.boardView andCellConfigureBlock:^(UICollectionViewCell *cell, Position position, int index) {
+    static NSString * const CVC_IDENTIFIER = @"CollectionViewCell";
+    [self.boardView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:CVC_IDENTIFIER];
+    
+    self.boardDataSource = [[CollectionViewDataSource alloc] initWithSections:self.game.board.numRows itemsPerSection:self.game.board.numCols cellIdentifier:CVC_IDENTIFIER cellConfigureBlock:^(NSInteger section, NSInteger item, UICollectionViewCell *cell) {
         
-        TFETile *currentTile = [self.game.board objectAtPosition:position];
-        UILabel *tileLabel;
+        TFETile *currentTile = self.game.board.objects[section][item];
         
-        if ([cell.contentView.subviews count] == 0) {
-            tileLabel = [UILabel newGameTileWithFrame:cell.contentView.bounds];
-            [cell.contentView addSubview:tileLabel];
-        } else {
-            tileLabel = [[cell.contentView subviews] firstObject];
-        }
-        
+        UILabel *tileLabel = [UILabel newGameTileWithFrame:cell.contentView.bounds];
         tileLabel.text = currentTile.value == 0 ? @"" : [NSString stringWithFormat:@"%d", currentTile.value];
         tileLabel.backgroundColor = [self tileColours][[NSNumber numberWithInt:currentTile.value]];
+        
+        cell.backgroundView = tileLabel;
+    }];
+    self.boardView.dataSource = self.boardDataSource;
     
-    } andCellTapHandler:NULL];
+    UICollectionViewFlowLayout *layout = (UICollectionViewFlowLayout *)self.boardView.collectionViewLayout;
+    [layout layoutAsGrid];
+    
+    self.boardSwipeGestureHandler = [[ViewSwipeGestureHandler alloc] initWithView:self.boardView];
+    self.boardSwipeGestureHandler.delegate = self;
     
     [self.game addObserver:self forKeyPath:@"score" options:NSKeyValueObservingOptionNew context:nil];
     self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
@@ -116,26 +114,31 @@
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context
 {
-    if ([keyPath isEqualToString:@"score"]) {
+    if ([keyPath isEqualToString:@"score"]) { // the score changing means a turn has been played
+        
         self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
         
-        [self.game.board enumerateWithBlock:^(Position position, int index, id obj) {
-
+        [self.game.board enumerateWithBlock:^(Position position, id obj) {
+            
             TFETile *currentTile = (TFETile *)obj;
-            NSIndexPath *currIndexPath = [self.boardCVC indexPathForPosition:position];
-            UICollectionViewCell *currCell = [self.boardCVC cellAtPosition:position];
-        
+            
+            NSIndexPath *currIndexPath = [NSIndexPath indexPathForItem:position.column
+                                                             inSection:position.row];
+            UICollectionViewCell *currCell = [self.boardView cellForItemAtIndexPath:currIndexPath];
+            
             if (currentTile.lastMoveRowOffset != 0 || currentTile.lastMoveColOffset != 0) {
-                // make the current tile go blank (if it's a newly generated tile with a non zero value then it will show itself after the animation)
-                int currTileValue = currentTile.value;
+                // make the current tile go blank (if a new non-zero tile has also been generated in this position then it will show after the following animation)
+                int currTileValueTemp = currentTile.value;
                 currentTile.value = 0;
                 [self.boardView reloadItemsAtIndexPaths:@[currIndexPath]];
-                currentTile.value = currTileValue;
+                currentTile.value = currTileValueTemp;
                 
                 Position newPos = (Position){position.row + currentTile.lastMoveRowOffset, position.column + currentTile.lastMoveColOffset};
-                UICollectionViewCell *newCell = [self.boardCVC cellAtPosition:newPos];
-                NSIndexPath *newIndexPath = [self.boardCVC indexPathForPosition:newPos];
+                NSIndexPath *newIndexPath = [NSIndexPath indexPathForItem:newPos.column
+                                                                inSection:newPos.row];
+                UICollectionViewCell *newCell = [self.boardView cellForItemAtIndexPath:newIndexPath];
                 
+                // generate a fake tile to be animated at the current position
                 UILabel *dummyTileLabel = [UILabel newGameTileWithFrame:currCell.frame];
                 dummyTileLabel.text = [NSString stringWithFormat:@"%d", currentTile.previousValue];
                 dummyTileLabel.backgroundColor = [self tileColours][[NSNumber numberWithInt:currentTile.previousValue]];
@@ -144,25 +147,24 @@
                 [UIView animateWithDuration:0.50
                                  animations:^{
                                      dummyTileLabel.frame = newCell.frame;
-                                     //dummyTileLabel.alpha = 0.2;
                                  }
                                  completion:^(BOOL finished) {
                                      [UIView performWithoutAnimation:^{
-                                        [dummyTileLabel removeFromSuperview];
+                                         [dummyTileLabel removeFromSuperview];
                                          [self.boardView reloadItemsAtIndexPaths:@[newIndexPath]];
                                      }];
                                      
-                }];
+                                 }];
             }
             
-            if (currentTile.lastMoveNewTile) { // did a newly generated tile appear in the current position during the last turn? if yes then animate this change
+            if (currentTile.lastMoveNewTile) { // did a newly generated tile appear in the current position during the last turn? if yes, then animate this change with a dummy tile
                 
                 UILabel *dummyTileLabel = [UILabel newGameTileWithFrame:currCell.frame];
                 dummyTileLabel.text = [NSString stringWithFormat:@"%d", currentTile.value];
                 dummyTileLabel.backgroundColor = [self tileColours][[NSNumber numberWithInt:currentTile.value]];
                 dummyTileLabel.alpha = 0.0;
                 [self.boardContainerView addSubview:dummyTileLabel];
-        
+                
                 [UIView animateWithDuration:0.5 delay:0.5 options:UIViewAnimationOptionCurveEaseIn animations:^{
                     dummyTileLabel.alpha = 1.0;
                 } completion:^(BOOL finished) {
@@ -172,11 +174,9 @@
                     }];
                 }];
             }
-         }];
+        }];
     }
 }
-
-#pragma mark - View Life Cycle
 
 #define DEFAULT_ROWS 4
 #define DEFAULT_COLS 4
@@ -202,7 +202,7 @@
     [newGameAlert addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:NULL]];
     [newGameAlert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         NSString *heightText = [newGameAlert.textFields firstObject].text;
-        NSString *widthText = [newGameAlert.textFields firstObject].text;
+        NSString *widthText = [newGameAlert.textFields lastObject].text;
         int numRows = [heightText intValue];
         int numCols = [widthText intValue];
         [self newGameWithRows:numRows andColumns:numCols];

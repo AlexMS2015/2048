@@ -17,4 +17,6 @@
 @property (nonatomic) BOOL lastMoveMerged;
 @property (nonatomic) BOOL lastMoveNewTile;
 
+-(void)resetTileForNextMove;
+
 @end
