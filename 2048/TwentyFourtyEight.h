@@ -14,9 +14,9 @@
 
 @property (nonatomic, readonly) BOOL gameInPlay;
 @property (nonatomic, readonly) int score;
-@property (nonatomic, strong, readonly) GridOfObjects *board; // tiles stores as 'TFETile' objects
+@property (nonatomic, strong, readonly) GridOfObjects *board; // tiles stored as 'TFETile' objects
 
 -(instancetype)initWithRows:(NSInteger)rows andColumns:(NSInteger)cols;
--(void)swipeInDirection:(NSString *)direction;
+-(void)swipeInDirection:(NSString *)direction; // "LEFT", "RIGHT", "UP", "DOWN"
 
 @end

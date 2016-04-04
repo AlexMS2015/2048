@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FA080AB91C8C496900FAD717 /* CollectionViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = FA080AB81C8C496900FAD717 /* CollectionViewDataSource.m */; settings = {ASSET_TAGS = (); }; };
 		FA239F6B1BF69B4900DB3FF9 /* NSArray+Reverse.m in Sources */ = {isa = PBXBuildFile; fileRef = FA239F6A1BF69B4900DB3FF9 /* NSArray+Reverse.m */; settings = {ASSET_TAGS = (); }; };
-		FA7306661C7C616000EA40EF /* CollectionViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = FA7306631C7C616000EA40EF /* CollectionViewDataSource.m */; settings = {ASSET_TAGS = (); }; };
 		FA73066C1C7C618700EA40EF /* PositionStruct.m in Sources */ = {isa = PBXBuildFile; fileRef = FA7306691C7C618700EA40EF /* PositionStruct.m */; settings = {ASSET_TAGS = (); }; };
 		FA73066D1C7C618700EA40EF /* GridOfObjects.m in Sources */ = {isa = PBXBuildFile; fileRef = FA73066B1C7C618700EA40EF /* GridOfObjects.m */; settings = {ASSET_TAGS = (); }; };
 		FA7306701C7C68B300EA40EF /* ViewSwipeGestureHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = FA73066F1C7C68B300EA40EF /* ViewSwipeGestureHandler.m */; settings = {ASSET_TAGS = (); }; };
@@ -44,10 +44,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		FA080AB71C8C496900FAD717 /* CollectionViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionViewDataSource.h; sourceTree = "<group>"; };
+		FA080AB81C8C496900FAD717 /* CollectionViewDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionViewDataSource.m; sourceTree = "<group>"; };
 		FA239F691BF69B4900DB3FF9 /* NSArray+Reverse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Reverse.h"; sourceTree = "<group>"; };
 		FA239F6A1BF69B4900DB3FF9 /* NSArray+Reverse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Reverse.m"; sourceTree = "<group>"; };
-		FA7306621C7C616000EA40EF /* CollectionViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionViewDataSource.h; sourceTree = "<group>"; };
-		FA7306631C7C616000EA40EF /* CollectionViewDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionViewDataSource.m; sourceTree = "<group>"; };
 		FA7306681C7C618700EA40EF /* PositionStruct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PositionStruct.h; sourceTree = "<group>"; };
 		FA7306691C7C618700EA40EF /* PositionStruct.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PositionStruct.m; sourceTree = "<group>"; };
 		FA73066A1C7C618700EA40EF /* GridOfObjects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GridOfObjects.h; sourceTree = "<group>"; };
@@ -105,6 +105,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		FA080AB21C8A535000FAD717 /* Unused */ = {
+			isa = PBXGroup;
+			children = (
+				FA73066E1C7C68B300EA40EF /* ViewSwipeGestureHandler.h */,
+				FA73066F1C7C68B300EA40EF /* ViewSwipeGestureHandler.m */,
+				FA73067E1C7DB57900EA40EF /* UICollectionViewFlowLayout+GridLayout.h */,
+				FA73067F1C7DB57900EA40EF /* UICollectionViewFlowLayout+GridLayout.m */,
+			);
+			name = Unused;
+			sourceTree = "<group>";
+		};
 		FA239F651BF69AF800DB3FF9 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
@@ -112,8 +123,6 @@
 				FA239F6A1BF69B4900DB3FF9 /* NSArray+Reverse.m */,
 				FAD65A671C13D4EF00FA21E7 /* UILabel+GameTile.h */,
 				FAD65A681C13D4EF00FA21E7 /* UILabel+GameTile.m */,
-				FA73067E1C7DB57900EA40EF /* UICollectionViewFlowLayout+GridLayout.h */,
-				FA73067F1C7DB57900EA40EF /* UICollectionViewFlowLayout+GridLayout.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -141,10 +150,9 @@
 		FAD7373E1BD3956C00BC4D56 /* 2048 */ = {
 			isa = PBXGroup;
 			children = (
-				FA7306621C7C616000EA40EF /* CollectionViewDataSource.h */,
-				FA7306631C7C616000EA40EF /* CollectionViewDataSource.m */,
-				FA73066E1C7C68B300EA40EF /* ViewSwipeGestureHandler.h */,
-				FA73066F1C7C68B300EA40EF /* ViewSwipeGestureHandler.m */,
+				FA080AB21C8A535000FAD717 /* Unused */,
+				FA080AB71C8C496900FAD717 /* CollectionViewDataSource.h */,
+				FA080AB81C8C496900FAD717 /* CollectionViewDataSource.m */,
 				FA7306681C7C618700EA40EF /* PositionStruct.h */,
 				FA7306691C7C618700EA40EF /* PositionStruct.m */,
 				FA73066A1C7C618700EA40EF /* GridOfObjects.h */,
@@ -352,9 +360,9 @@
 				FA73066D1C7C618700EA40EF /* GridOfObjects.m in Sources */,
 				FAD737891BD3A7DF00BC4D56 /* TwentyFourtyEightVC.m in Sources */,
 				FA7306801C7DB57900EA40EF /* UICollectionViewFlowLayout+GridLayout.m in Sources */,
-				FA7306661C7C616000EA40EF /* CollectionViewDataSource.m in Sources */,
 				FA73066C1C7C618700EA40EF /* PositionStruct.m in Sources */,
 				FA239F6B1BF69B4900DB3FF9 /* NSArray+Reverse.m in Sources */,
+				FA080AB91C8C496900FAD717 /* CollectionViewDataSource.m in Sources */,
 				FA7306701C7C68B300EA40EF /* ViewSwipeGestureHandler.m in Sources */,
 				FAD737441BD3956C00BC4D56 /* AppDelegate.m in Sources */,
 				FAD65A691C13D4EF00FA21E7 /* UILabel+GameTile.m in Sources */,

@@ -75,7 +75,7 @@
             }
         }
     }
-    
+
     [self newTile];
 }
 

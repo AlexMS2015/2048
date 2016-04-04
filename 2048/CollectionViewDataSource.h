@@ -8,13 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-typedef void (^CellConfigureBlock)(NSInteger section, NSInteger item, UICollectionViewCell *cell);
+typedef void (^CellConfigureBlock)(NSIndexPath *path, id object, UICollectionViewCell *cell);
 
 @interface CollectionViewDataSource : NSObject <UICollectionViewDataSource>
 
--(instancetype)initWithSections:(NSInteger)section
-                itemsPerSection:(NSInteger)items
-                 cellIdentifier:(NSString *)cellIdentifier
-             cellConfigureBlock:(CellConfigureBlock)configureBlock;
+-(instancetype)initWithData:(NSArray <NSArray *>*)data
+             cellIdentifier:(NSString *)cellIdentifier
+         cellConfigureBlock:(CellConfigureBlock)configureBlock;
 
 @end

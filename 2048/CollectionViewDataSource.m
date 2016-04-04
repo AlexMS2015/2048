@@ -10,8 +10,7 @@
 
 @interface CollectionViewDataSource ()
 
-@property (nonatomic) NSInteger sections;
-@property (nonatomic) NSInteger items;
+@property (strong, nonatomic) NSArray<NSArray *> *data;
 @property (strong, nonatomic) NSString *cellIdentifier;
 @property (copy, nonatomic) CellConfigureBlock configureBlock;
 
@@ -19,11 +18,10 @@
 
 @implementation CollectionViewDataSource
 
--(instancetype)initWithSections:(NSInteger)section itemsPerSection:(NSInteger)items cellIdentifier:(NSString *)cellIdentifier cellConfigureBlock:(CellConfigureBlock)configureBlock
+-(instancetype)initWithData:(NSArray<NSArray *> *)data cellIdentifier:(NSString *)cellIdentifier cellConfigureBlock:(CellConfigureBlock)configureBlock
 {
     if (self = [super init]) {
-        self.sections = section;
-        self.items = items;
+        self.data = data;
         self.cellIdentifier = cellIdentifier;
         self.configureBlock = configureBlock;
     }
@@ -35,20 +33,22 @@
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
-    return self.sections;
+    return [self.data count];
 }
 
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return self.items;
+    return [self.data[section] count];
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:self.cellIdentifier forIndexPath:indexPath];
     
-    if (self.configureBlock) self.configureBlock(indexPath.section, indexPath.item, cell);
+    if (self.configureBlock) {
+        self.configureBlock(indexPath, self.data[indexPath.section][indexPath.item], cell);
+    }
     
     return cell;
 }

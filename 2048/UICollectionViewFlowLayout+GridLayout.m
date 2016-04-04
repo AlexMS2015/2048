@@ -25,10 +25,14 @@
         self.itemSize = self.scrollDirection == UICollectionViewScrollDirectionHorizontal ?
         CGSizeMake(width / numSections, height / numItems) : CGSizeMake(width / numItems, height / numSections);
     } else {
-        self.itemSize = self.scrollDirection == UICollectionViewScrollDirectionHorizontal ?
-        CGSizeMake(height / numItems, height / numItems) : CGSizeMake(width / numItems, width / numItems);
+        if (self.collectionView.numberOfSections == 1.0) {
+            self.itemSize = self.scrollDirection == UICollectionViewScrollDirectionHorizontal ?
+            CGSizeMake(height, height) : CGSizeMake(width, width);
+        } else {
+            self.itemSize = self.scrollDirection == UICollectionViewScrollDirectionHorizontal ?
+            CGSizeMake(height / numItems, height / numItems) : CGSizeMake(width / numItems, width / numItems);
+        }
     }
 }
-
 
 @end

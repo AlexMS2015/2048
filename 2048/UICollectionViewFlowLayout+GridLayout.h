@@ -25,6 +25,9 @@
  If scrolling is enabled then the cells wil be sized as squares. If it is disabled, the cells will
  exactly fit inside the bounds of the collection view (like a Chess boards).
  
+ If the number of sections is 1 and the grid is scrolling then the above layouts will be reversed (e.g.
+ for horizontal it will flow like this: I1 --> I2 --> I3).
+ 
  Spacing between items and spacing between sections is 0.
  
  */

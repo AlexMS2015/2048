@@ -23,16 +23,53 @@
                                 <subviews>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="XUf-b1-oz1">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="320"/>
-                                        <color key="backgroundColor" red="0.27450980390000002" green="0.59999999999999998" blue="0.89019607840000003" alpha="1" colorSpace="calibratedRGB"/>
-                                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Kes-8m-8kh">
+                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <gestureRecognizers/>
+                                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="Kes-8m-8kh">
                                             <size key="itemSize" width="50" height="50"/>
                                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         </collectionViewFlowLayout>
-                                        <cells/>
+                                        <cells>
+                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Tile Cell" id="iXw-1f-SUD">
+                                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Oj8-hu-umG">
+                                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="28"/>
+                                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                </view>
+                                                <constraints>
+                                                    <constraint firstItem="Oj8-hu-umG" firstAttribute="top" secondItem="iXw-1f-SUD" secondAttribute="top" id="YMM-F9-rwD"/>
+                                                    <constraint firstAttribute="trailing" secondItem="Oj8-hu-umG" secondAttribute="trailing" id="kQz-DM-Vsp"/>
+                                                    <constraint firstAttribute="bottom" secondItem="Oj8-hu-umG" secondAttribute="bottom" id="qly-8L-pmJ"/>
+                                                    <constraint firstItem="Oj8-hu-umG" firstAttribute="leading" secondItem="iXw-1f-SUD" secondAttribute="leading" id="tvs-RN-Is5"/>
+                                                </constraints>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.borderWidth">
+                                                        <real key="value" value="0.29999999999999999"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                            </collectionViewCell>
+                                        </cells>
+                                        <connections>
+                                            <outletCollection property="gestureRecognizers" destination="WTC-Ns-yMH" appends="YES" id="fcY-gr-kDu"/>
+                                            <outletCollection property="gestureRecognizers" destination="1Zk-7d-VHZ" appends="YES" id="cl0-Hj-3Qx"/>
+                                            <outletCollection property="gestureRecognizers" destination="o3b-jK-rUM" appends="YES" id="xdd-UX-xPo"/>
+                                            <outletCollection property="gestureRecognizers" destination="0qP-Z1-kur" appends="YES" id="NiC-gc-i5J"/>
+                                        </connections>
                                     </collectionView>
                                 </subviews>
+                                <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="XUf-b1-oz1" secondAttribute="bottom" id="L0P-a0-Rnf"/>
                                     <constraint firstItem="XUf-b1-oz1" firstAttribute="leading" secondItem="Bon-qW-a5T" secondAttribute="leading" id="L4u-8T-CiD"/>
@@ -50,6 +87,7 @@
                             </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="zBP-M8-y0W" secondAttribute="trailing" constant="8" id="MZy-OT-5dE"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="zBP-M8-y0W" secondAttribute="bottom" constant="8.5" id="YqD-bI-PaF"/>
@@ -71,6 +109,26 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <swipeGestureRecognizer direction="right" id="1Zk-7d-VHZ">
+                    <connections>
+                        <action selector="swipeHandler:" destination="BYZ-38-t0r" id="ixp-6L-113"/>
+                    </connections>
+                </swipeGestureRecognizer>
+                <swipeGestureRecognizer direction="up" id="o3b-jK-rUM">
+                    <connections>
+                        <action selector="swipeHandler:" destination="BYZ-38-t0r" id="Ykg-tf-dyH"/>
+                    </connections>
+                </swipeGestureRecognizer>
+                <swipeGestureRecognizer direction="down" id="0qP-Z1-kur">
+                    <connections>
+                        <action selector="swipeHandler:" destination="BYZ-38-t0r" id="T91-X6-PZQ"/>
+                    </connections>
+                </swipeGestureRecognizer>
+                <swipeGestureRecognizer direction="left" id="WTC-Ns-yMH">
+                    <connections>
+                        <action selector="swipeHandler:" destination="BYZ-38-t0r" id="4i5-Gq-ORf"/>
+                    </connections>
+                </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="840" y="237"/>
         </scene>

@@ -11,16 +11,14 @@
 #import "TFETile.h"
 #import "UILabel+GameTile.h"
 #import "CollectionViewDataSource.h"
-#import "UICollectionViewFlowLayout+GridLayout.h"
-#import "ViewSwipeGestureHandler.h"
 
-@interface TwentyFourtyEightVC () <ViewSwipeGestureHandlerDelegate>
+
+@interface TwentyFourtyEightVC () //<ViewSwipeGestureHandlerDelegate>
 
 @property (strong, nonatomic) TwentyFourtyEight *game;
 
 // external helper objects
 @property (strong, nonatomic) CollectionViewDataSource *boardDataSource;
-@property (strong, nonatomic) ViewSwipeGestureHandler *boardSwipeGestureHandler;
 
 // outlets
 @property (weak, nonatomic) IBOutlet UICollectionView *boardView;
@@ -53,9 +51,9 @@
 }
 
 #pragma mark - GridVCDelegate
-
--(void)view:(UIView *)view swipedInDirection:(UISwipeGestureRecognizerDirection)direction
+- (IBAction)swipeHandler:(UISwipeGestureRecognizer *)sender
 {
+    UISwipeGestureRecognizerDirection direction = sender.direction;
     switch (direction) {
         case UISwipeGestureRecognizerDirectionLeft:
             [self.game swipeInDirection:@"LEFT"];
@@ -85,26 +83,26 @@
 {
     _game = game;
     
-    static NSString * const CVC_IDENTIFIER = @"CollectionViewCell";
-    [self.boardView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:CVC_IDENTIFIER];
+    //static NSString * const CVC_IDENTIFIER = @"CollectionViewCell";
+    //[self.boardView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:CVC_IDENTIFIER];
+
+    static NSString * const CVC_IDENTIFIER = @"Tile Cell";
     
-    self.boardDataSource = [[CollectionViewDataSource alloc] initWithSections:self.game.board.numRows itemsPerSection:self.game.board.numCols cellIdentifier:CVC_IDENTIFIER cellConfigureBlock:^(NSInteger section, NSInteger item, UICollectionViewCell *cell) {
+    self.boardDataSource = [[CollectionViewDataSource alloc] initWithData:self.game.board.objects cellIdentifier:CVC_IDENTIFIER cellConfigureBlock:^(NSIndexPath *path, id object, UICollectionViewCell *cell) {
+        TFETile *currentTile = (TFETile *)object;
+        UILabel *tileLabel = (UILabel *)[cell viewWithTag:1];
         
-        TFETile *currentTile = self.game.board.objects[section][item];
-        
-        UILabel *tileLabel = [UILabel newGameTileWithFrame:cell.contentView.bounds];
+        //UILabel *tileLabel = [UILabel newGameTileWithFrame:cell.contentView.bounds];
         tileLabel.text = currentTile.value == 0 ? @"" : [NSString stringWithFormat:@"%d", currentTile.value];
         tileLabel.backgroundColor = [self tileColours][[NSNumber numberWithInt:currentTile.value]];
         
-        cell.backgroundView = tileLabel;
+        //cell.backgroundView = tileLabel;
     }];
+
     self.boardView.dataSource = self.boardDataSource;
     
     UICollectionViewFlowLayout *layout = (UICollectionViewFlowLayout *)self.boardView.collectionViewLayout;
-    [layout layoutAsGrid];
-    
-    self.boardSwipeGestureHandler = [[ViewSwipeGestureHandler alloc] initWithView:self.boardView];
-    self.boardSwipeGestureHandler.delegate = self;
+    layout.itemSize = CGSizeMake(self.boardView.bounds.size.width / self.game.board.numCols, self.boardView.bounds.size.height / self.game.board.numRows);
     
     [self.game addObserver:self forKeyPath:@"score" options:NSKeyValueObservingOptionNew context:nil];
     self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
@@ -137,7 +135,7 @@
                 NSIndexPath *newIndexPath = [NSIndexPath indexPathForItem:newPos.column
                                                                 inSection:newPos.row];
                 UICollectionViewCell *newCell = [self.boardView cellForItemAtIndexPath:newIndexPath];
-                
+
                 // generate a fake tile to be animated at the current position
                 UILabel *dummyTileLabel = [UILabel newGameTileWithFrame:currCell.frame];
                 dummyTileLabel.text = [NSString stringWithFormat:@"%d", currentTile.previousValue];
@@ -153,7 +151,6 @@
                                          [dummyTileLabel removeFromSuperview];
                                          [self.boardView reloadItemsAtIndexPaths:@[newIndexPath]];
                                      }];
-                                     
                                  }];
             }
             
